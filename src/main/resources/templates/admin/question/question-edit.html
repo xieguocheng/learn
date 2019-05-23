@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" type="text/css" href="/static/lib/datatables/1.10.15/jquery.dataTables.css">
+	<div th:include="admin/common :: head"></div>
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="/static/lib/html5shiv.js"></script>
+	<script type="text/javascript" src="/static/lib/respond.min.js"></script>
+	<![endif]-->
+	<title>详情页面</title>
+</head>
+<body>
+<article class="page-container">
+	<form  class="form form-horizontal" action="/admin/question/questionEdit"
+		  th:object="${question}" id="form-teacher-add" method="POST">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>题目ID：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" th:value="${question.questionId }"  readonly="readonly" placeholder="" id="questionId" name="questionId">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">题目类型：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select name="type" class="select">
+
+            <option th:each="course,courseType:${courseTypeList}" th:value="${course.courseType}" th:text="${course.name}"></option>
+					<!--<option value="1">计算机类</option>
+					<option value="2">数学类</option>-->
+				</select>
+				</span> </div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">描述：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="questionDesc" cols="" rows="" class="textarea"  placeholder="" onKeyUp="$.Huitextarealength(this,100)"  th:text="${question.questionDesc }"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length"></em></p>
+			</div>
+		</div>
+		<!--<c:if test="${question.questionType eq 1 || question.questionType eq 2 }">-->
+			<div class="row cl" >
+				<label class="form-label col-xs-4 col-sm-3">选项：</label>
+				<div class="formControls col-xs-8 col-sm-9" >
+					<textarea name="choice" cols="" rows="" class="textarea"  placeholder="" onKeyUp="$.Huitextarealength(this,100)"  th:if="${question.questionType==1||question.questionType==2}" th:text="${question.choice }"></textarea>
+					<p class="textarea-numberbar"><em class="textarea-length"></em></p>
+				</div>
+			</div>
+
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+</article>
+<footer th:include="admin/common :: footer"></footer>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+
+
+<script type="text/javascript">
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        //表单验证
+        $("#form-teacher-add").validate({
+
+            rules: {
+                questionDesc: {
+                    required: true
+                },
+                choice: {
+                    required: true
+                }
+            },
+            // errorElement: 'span',
+            messages: {
+                questionDesc: '必须有描述',
+                choice: '必须有选项',
+				//type:'必须有类型'
+            },
+            // errorPlacement: function (error, element) { //错误信息位置设置方法
+            //     error.appendTo(element); //这里的element是录入数据的对象
+            // },
+            onkeyup: false,
+            focusCleanup: true,
+            success: "valid",
+            submitHandler: function (form) {
+
+                alert(5456);
+
+                $(form).ajaxSubmit({
+                    type: 'post',
+                    url: '/admin/question/questionEdit', // 提交地址
+                    success: function (data) {
+                        if (data.code === 200) {
+                            alert('提交成功！');
+                            parent_reload();
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.$('.btn-refresh').click();
+                            parent.layer.close(index);
+                            removeIframe();
+                        } else {
+                            layer.msg(data.message, {icon: 5, time: 2000});
+                        }
+                    },
+                    error: function (request, message, e) {
+                        layer.msg(request.responseText, {icon: 5, time: 2000});
+                    }
+                });
+                return false; //此处必须返回false，阻止常规的form提交
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

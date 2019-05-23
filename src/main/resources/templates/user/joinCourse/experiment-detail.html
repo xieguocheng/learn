@@ -1,0 +1,580 @@
+<style type="text/css">
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    body{
+        color: #666;
+        background: #efefef;
+        font-weight: lighter;
+        width: 100%;
+    }
+    h1,h2,h3{
+        font-weight: lighter;
+    }
+    ul,li{
+        margin: 0;
+        list-style: none;
+        padding: 0;
+    }
+    #main{
+        width: 64%;
+        margin: 1% auto;
+        padding: 1.5% 6%;
+        background: white;
+        box-shadow: 0 0 10px #ddd;
+        border-radius: 15px;
+        height: min-content;
+    }
+    .cl{
+        font-weight: normal;
+
+        background: #ddd;
+        color: #666;
+        padding: 1em 20px;
+    }
+    .table{
+
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .table tr{
+        border-bottom: thin solid #ddd;
+
+    }
+    .table th,td{
+        vertical-align:top;
+        padding: 1em 0;
+    }
+    .table th{
+        padding-left: 20px;
+        padding-right: 10px;
+    }
+    .table tr:nth-child(2n+1){
+        background: #efefef;
+    }
+    #mydesc label{
+        color: #666;
+        width: 80px;
+
+        font-weight: bold;
+        display: inline-block;
+        padding: 1em 10px 1em 20px;
+        vertical-align:top;
+    }
+    #upfile{
+        color: #666;
+
+        font-weight: bold;
+        display: inline-block;
+        padding: 1em 10px 0em 20px;
+    }
+
+    #mydesc textarea{
+        color: #666;
+        padding: .4em 0;
+        margin-top: .8em;
+        width: 55em;
+        height: 8em;
+        margin-bottom: .7em;
+        display: inline-block;
+        resize: unset;
+    }
+    .table tr .text-r{
+        color: #666;
+        text-align: left;
+    }
+    #statusOfEx{
+        float: right;
+        background: #ddd;
+        margin-top: 30px;
+        padding-right: 10px;
+    }
+    a{
+        color: #666;
+    }
+    a:visited,a:link{
+        color: #666;
+    }
+    #BACK{
+        background:white;
+        display: block;
+        margin: 20px 0;
+        cursor: pointer;
+        text-decoration: underline;
+        font-size: 120%;
+    }
+    #submit{
+        border: 0;
+        background:#0e90d2;
+        color: white;
+        padding: .5em 1em;
+        margin: 1em auto !important;
+        display: block;
+        -webkit-border-radius:5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    #uploader{
+
+        position: relative;
+
+        left: 120px;
+        top: -25px;
+    }
+    #picker,#ctlBtn{
+        margin-left: 0 !important;
+
+    }
+    .uploader-list {
+        font-size: 90%;
+        font-weight: lighter;
+        color: #666666;
+
+        padding: .5em 0 0;
+    }
+    .info{
+        display: inline-block;
+        width: 25em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .status{
+        display: inline-block;
+    }
+
+</style>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" href="/static/lib/webuploader/0.1.5/webuploader.css">
+
+<main id="main">
+
+    <a id="BACK" th:href="@{'/user/joinCourse/back?courseId='+${courseExperiment.courseId}}">
+        ← back
+    </a>
+    <div class="cl pd-20" >
+        <!-- 教师头像默认保存在home/teacherImg -->
+        <!--<img class="avatar size-XL l" src="/static/images/logo/favicon.png">-->
+        <dl >
+            <dt>
+			<span class="f-18" th:text="实验标题+'：'+${courseExperiment.title}">
+			</span>
+                <br>
+                <span class="f-14" th:text="总分+'：'+${courseExperiment.score}+分">
+			</span>
+            </dt>
+
+        </dl>
+    </div>
+
+    <div class="pd-20">
+        <table class="table">
+            <tbody>
+            <tr>
+                <th class="text-r" width="80">实验详情：</th>
+                <td th:utext="${courseExperiment?.detail}"></td>
+            </tr>
+
+            <tr>
+                <th class="text-r" width="80">超时提交：</th>
+                <td th:if="${courseExperiment?.overSubmit}==0">
+                    <span class="label label-danger radius" style="color:red;">不允许</span>
+                </td>
+                <td th:if="${courseExperiment?.overSubmit}==1">
+                    <span class="label label-secondary radius" style="color:green;">允许</span>
+                </td>
+            </tr>
+
+            <tr>
+                <th class="text-r" width="80">状态：</th>
+                <td th:if="${courseExperiment.status}==1">
+                    <span class="label label-secondary radius" style="color:green;">实验进行中</span>
+                </td>
+                <td th:if="${courseExperiment.status}==0">
+                    <span class="label label-warning radius" style="color:red;">实验已经截止</span>
+                </td>
+            </tr>
+
+            <tbody  th:each="url,urlList : ${urlList}">
+            <tr>
+                <th class="text-r" width="80" th:text="附件+${urlList.index+1}"></th>
+                <td >
+                    <a th:href="${url}" id="myUrl">点击查看下载附件</a>
+
+                    <style>
+                        #myUrl{
+                            display: block;
+                            height: 4em;
+                            background-repeat: no-repeat;
+                            line-height: 4em;
+                            padding-left: 4em;
+
+                            -webkit-background-size: 3em;
+                            background-size: 3em;
+                            background-position: left center;
+                        }
+                        #myUrl:hover{
+                            color: #000;
+                        }
+                        a{
+                            background: url("/static/images/admin/file/un.png");
+                        }
+                        a[href$="docx"],
+                        a[href$="doc"],
+                        a[href="docm"],
+                        a[href$="dotx"],
+                        a[href$="dotm"]{
+                            background: url("/static/images/admin/file/word.png");
+                        }
+                        a[href$="xls"],
+                        a[href$="xlsm"],
+                        a[href$="xltx"],
+                        a[href$="xltm"],
+                        a[href$="xlsb"],
+                        a[href$="xlam"],
+                        a[href$="xlsx"]{
+                            background: url("/static/images/admin/file/excel.png");
+                        }
+                        a[href$="pptx"],
+                        a[href$="ppt"],
+                        a[href$="pptm"],
+                        a[href$="ppsx"],
+                        a[href$="potx"],
+                        a[href$="potm"],
+                        a[href$="ppam"]{
+                            background: url("/static/images/admin/file/point.png");
+                        }
+                    </style>
+                </td>
+            </tr>
+            </tbody>
+
+            <tr>
+                <th class="text-r" width="80">创建时间：</th>
+                <td th:text="${#dates.format(courseExperiment?.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+            <tr style="background:#efefef">
+                <th class="text-r" width="80" >截止时间：</th>
+                <td th:text="${#dates.format(courseExperiment?.endTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <form action="/user/join/courseExperiment/add" class="form form-horizontal" id="form-teacher-add" method="POST">
+
+        <input type="text" th:value="${courseExperiment.courExperimentId}"
+               readonly="readonly" hidden="true"
+              id="courExperimentId" name="courExperimentId" >
+        <div id="mydesc">
+            <label ><span style="color:red">*</span>描述:</label>
+            <textarea placeholder="点击编辑实验描述" class="textarea" name="desr" id="" cols="30" rows="10"></textarea>
+        </div>
+
+
+        <div class="" style="background:#efefef;height: min-content">
+            <label class="" id="upfile">
+                <span style="color:red">*</span>上传文件：
+            </label>
+            <div id="uploader" class="wu-example">
+                <div class="btns">
+                    <div id="picker">选择文件</div>
+                    <!--<button id="ctlBtn" class="btn btn-default">开始上传</button>-->
+                    <div class="uploadBtn" id="ctlBtn">开始上传</div>
+                    <!--用来存放文件信息-->
+                    <div id="thelist" class="uploader-list"></div>
+
+                    <style>
+                        #picker{
+                            margin-left: 1em;
+                        }
+                        #ctlBtn{
+                            display:inline-block;
+                            vertical-align: top;
+                            width: min-content;
+                            white-space: nowrap;
+                            border-radius: 4px;
+                            height: 30px;
+                            width: 80px;
+                            text-align: center;
+                            line-height: 30px;
+                            color: white;
+                            background: #24d788;
+                            cursor: pointer;
+
+                        }
+                        #ctlBtn:hover{
+                            background:#24c768;
+                        }
+                        #submit{
+                            margin-left: -4.8em;
+                            width: 80px;
+                        }
+
+                    </style>
+                    <p style="font-size:90%">
+                        提示:选择文件后请点击开始上传按钮，实验内容重新提交将覆盖上一次提交内容，
+                        请谨慎提交！
+                        <br>
+                        最多可添加 5 个文件，
+                        文件类型支持：.docx/.ppt/.xls/.pdf/.txt/.png/.jpg/.zip,
+                        文件大小限制：30MB以下
+                    </p>
+                </div>
+            </div>
+        </div>
+
+     <input type="submit" id="submit"
+     value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+
+
+    </form>
+
+    <br><br><br>
+
+
+
+</main>
+
+<footer th:include="admin/common :: footer"></footer>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/static/lib/webuploader/0.1.5/webuploader.min.js"></script>
+
+<script type="text/javascript">
+    /*用户-编辑*/
+    function show(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+
+    $(function() {
+
+        /******************上传**********************/
+        var $list = $('#thelist'),
+            $btn = $('#ctlBtn'),
+            // 文件上传序列
+            file_sequence = 0;
+
+        var uploader = WebUploader.create({
+            swf: '/static/lib/webuploader/0.1.5/Uploader.swf',
+            auto: false, // 选择文件后自动上传
+            runtimeOrder: 'html5', // 直接使用html5模式，还有flash的我就忽略了..
+            pick: {
+                id: '#picker', // 按钮元素
+                multiple: false // 是否支持文件多选，false表示只能选一个
+            },
+            server: '/user/upload/file/[[${courseExperiment.courseId}]]', // 上传文件的接口（替换成你们后端给的接口路径）
+            accept: {
+                title: 'Files',
+                extensions: 'gif,jpg,jpeg,bmp,png,pdf,doc,docx,txt,xls,xlsx,ppt,pptx,zip,mp3,mp4,text,csv',
+                mimeTypes: 'image/*,text/*'
+                //word
+                + ',application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                //excel
+                + ',application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                //ppt
+                + ',application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation'
+                + ',application/pdf'
+                + ',application/zip'
+                + ',application/csv'
+            },
+
+            disableGlobalDnd: true, // 禁掉全局的拖拽功能。
+            fileNumLimit: 5, // 验证文件总数量, 超出则不允许加入队列
+            fileSizeLimit: 30 * 1024 * 1024, // 限制所有上传文件的大小30m
+            fileSingleSizeLimit: 30 * 1024 * 1024 // 限制单个上传文件的大小30m
+
+        });
+
+        // 当有文件被添加进队列的时候
+        uploader.on('fileQueued', function (file) {
+            // TODO
+            $list.append('<div id="' + file.id + '" class="item">' +
+                '<h4 class="info">' + file.name + '</h4>' +
+                '<p class="state">等待上传...</p>' +
+                '</div>');
+        });
+
+        // 文件上传过程中创建进度条实时显示。
+        uploader.on('uploadProgress', function (file, percentage) {
+            // TODO 自定义进度条
+            var $li = $('#' + file.id),
+                $percent = $li.find('.progress .progress-bar');
+            // 避免重复创建
+            if (!$percent.length) {
+                $percent = $('<div class="progress progress-striped active">' +
+                    '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+                    '</div>' +
+                    '</div>').appendTo($li).find('.progress-bar');
+            }
+            $li.find('p.state').text('上传中');
+            $percent.css('width', percentage * 100 + '%');
+        });
+
+        // 上传成功
+        uploader.on('uploadSuccess', function (file, response) {
+            $('#' + file.id).find('p.state').text('已上传');
+
+            var path = response.data.key;
+            $file_container = $('.uploader-list');
+            $file_container.off().append
+            ('<input type="hidden" name="userUrls" value="' + path + '" />')
+            file_sequence++;
+
+            alert("文件：" + response.data.key + "上传成功");
+
+            //hideBatchDialog();
+            /*if (response.status === 1) {
+                // 只要文件上传成功就可以了直接请求检测接口
+                // TODO..
+            } else {
+                alert(response.message);
+            }*/
+        });
+
+        // 上传失败
+        uploader.on('uploadError', function (file) {
+            $('#' + file.id).find('p.state').text('上传出错');
+            alert('上传失败');
+            // TODO
+        });
+
+        // 上传完成（不论成功或失败都会执行）
+        uploader.on('uploadComplete', function (file) {
+            $('#' + file.id).find('.progress').fadeOut();
+            // TODO
+        });
+
+        // 上传错误
+        uploader.on('error', function (status) {
+            var errorTxt = '';
+            if (status == 'Q_TYPE_DENIED') {
+                errorTxt = '文件类型错误';
+            } else if (status == 'Q_EXCEED_SIZE_LIMIT') {
+                errorTxt = '文件大小超出限制，请控制在30M以内哦';
+            } else {
+                errorTxt = '其他错误';
+            }
+            alert('提示:' + errorTxt);
+        });
+
+        $btn.on('click', function () {
+            if ($(this).hasClass('disabled')) {
+                return false;
+            }
+            uploader.upload();
+        });
+
+        $('.select').change(function(){
+            if($(this).val()==3||$(this).val()==4){
+                $('.choose').css('display','none');
+            }else{
+                $('.choose').css('display','block');
+            }
+        })
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+/***************************提交*******************************************************/
+
+        $("#form-teacher-add").validate({
+            rules:{
+                desr1:{
+                    required:true,
+                },
+                userUrls:{
+                    required:true,
+                }
+
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+
+                //这里使用异步提交是为了验证区域存不存在
+                //form.submit();
+
+                /* alert(5456);
+                $(form).ajaxSubmit({
+
+                    url : "${pageContext.request.contextPath}/teacher/teacherAdd",
+                    type : "POST",
+                    data : fd,
+                    dataType : "json",
+                    processData : false, // 告诉jQuery不要去处理发送的数据
+                    contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+                    success: function(data){
+                        if (data.status==1){
+                            alert("添加教师成功");
+                            location.href="${pageContext.request.contextPath}/teacher/teacherList";
+                        }else{
+                            alert("添加失败！");
+                        }
+                    }
+                }); */
+
+                var index = parent.layer.getFrameIndex(window.name);
+                //parent.$('.btn-refresh').click();
+                //parent.layer.close(index);
+
+                var fd = new FormData($("#form-teacher-add")[0]);
+                $.ajax({
+                    url : "/user/join/courseExperiment/add",
+                    type : "post",
+                    data : fd,
+                    dataType : "json",
+                    processData : false, // 告诉jQuery不要去处理发送的数据
+                    contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+                    success: function(data){
+                        if (data.code === 200){
+                            alert("上交实验成功！惠州人民发来贺电！！");
+
+                            layer.msg('已上交实验!',{icon:1,time:2000});
+                        }else{
+                            layer.msg('失败!',{icon: 5,time:1000});
+                            location.replace(location.href);
+
+                        }
+                    }
+                });
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+    });
+</script>
+
+<script>
+
+    window. addEventListener ('message', function(event) {
+        if(event.data == "1"){
+            var post= document.getElementById("main").offsetHeight;
+            top.postMessage(post, '*');
+            console.log(post);
+        }
+    });
+
+</script>

@@ -1,0 +1,236 @@
+<style type="text/css">
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    body{
+        color: #666;
+        background: #efefef;
+        font-weight: lighter;
+        width: 100%;
+    }
+    h1,h2,h3{
+        font-weight: lighter;
+    }
+    ul,li{
+        margin: 0;
+        list-style: none;
+        padding: 0;
+    }
+    #main{
+        width: 64%;
+        margin: 1% auto;
+        padding: 1.5% 6%;
+        background: white;
+        box-shadow: 0 0 10px #ddd;
+        border-radius: 15px;
+        height: min-content;
+    }
+
+    .cl{
+        font-weight: normal;
+
+        background: #ddd;
+        color: #666;
+        padding: 1em 50px;
+    }
+    .table{
+
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .table tr{
+        border-bottom: thin solid #ddd;
+
+    }
+    .table th,td{
+        vertical-align:top;
+        padding: 1em 0;
+    }
+    .table th{
+        padding-left: 50px;
+        padding-right: 10px;
+    }
+    .table tr:nth-child(2n+1){
+        background: #efefef;
+    }
+    .table tr .text-r{
+        color: #666;
+        text-align: left;
+    }
+    #statusOfEx{
+        float: right;
+        background: #ddd;
+        margin-top: 30px;
+        padding-right: 10px;
+    }
+    a{
+        color: #666;
+    }
+    a:visited,a:link{
+        color: #666;
+    }
+    #BACK{
+        background:white;
+        display: block;
+        margin: 20px 0;
+        cursor: pointer;
+        text-decoration: underline;
+        font-size: 120%;
+    }
+</style>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<main id="main">
+    <a id="BACK"
+       th:href="@{'/user/createCourse/back?courseId='+${courseExperiment.courseId}}">
+    ← back</a>
+
+	<a id="statusOfEx"
+       th:onclick="|show('查看所有学生实验情况','/user/createCourse/courseExperiment/user/${courseExperiment?.courExperimentId }','${courseExperiment?.courExperimentId }')|"
+        href="javascript:;" title="学生详情">查看所有学生实验情况</a>
+
+
+    <div class="cl pd-20" >
+        <!-- 教师头像默认保存在home/teacherImg -->
+        <!--<img class="avatar size-XL l" src="/static/images/logo/favicon.png">-->
+        <dl >
+            <dt>
+                <th class="text-r" width="80">实验标题：</th>
+			<span class="f-18" th:text="${courseExperiment.title}">
+			</span>
+                <br>
+                <th class="text-r" width="80">总分：</th>
+                <span class="f-14" th:text="${courseExperiment.score}+分">
+			</span>
+            </dt>
+
+        </dl>
+    </div>
+
+    <div class="pd-20">
+        <table class="table">
+            <tbody>
+            <tr>
+                <th class="text-r" width="80">实验详情：</th>
+                <td th:utext="${courseExperiment?.detail}"></td>
+            </tr>
+
+            <tr>
+                <th class="text-r" width="80">超时提交：</th>
+                <td th:if="${courseExperiment?.overSubmit}==0">
+                    <span class="label label-danger radius" style="color:red;">不允许</span>
+                </td>
+                <td th:if="${courseExperiment?.overSubmit}==1">
+                    <span class="label label-secondary radius" style="color:green;">允许</span>
+                </td>
+            </tr>
+
+            <tr>
+                <th class="text-r" width="80">状态：</th>
+                <td th:if="${courseExperiment?.status}==1">
+                    <span class="label label-secondary radius" style="color:green;">实验进行中</span>
+                </td>
+                <td th:if="${courseExperiment?.status}==0">
+                    <span class="label label-warning radius" style="color:red;">实验已经截止</span>
+                </td>
+            </tr>
+
+            <tbody  th:each="url,urlList : ${urlList}" >
+            <tr style="background: white">
+                <th class="text-r" width="80" th:text="附件+${urlList.index+1}"></th>
+                <td >
+                    <a th:href="${url}" id="myUrl">点击查看下载附件</a>
+
+                    <style>
+                        #myUrl{
+                            display: block;
+                            height: 4em;
+                            background-repeat: no-repeat;
+                            line-height: 4em;
+                            padding-left: 4em;
+
+                            -webkit-background-size: 3em;
+                            background-size: 3em;
+                            background-position: left center;
+                        }
+                        #myUrl:hover{
+                            color: #000;
+                        }
+                        a{
+                            background: url("/static/images/admin/file/un.png");
+                        }
+                        a[href$="docx"],
+                        a[href$="doc"],
+                        a[href="docm"],
+                        a[href$="dotx"],
+                        a[href$="dotm"]{
+                            background: url("/static/images/admin/file/word.png");
+                        }
+                        a[href$="xls"],
+                        a[href$="xlsm"],
+                        a[href$="xltx"],
+                        a[href$="xltm"],
+                        a[href$="xlsb"],
+                        a[href$="xlam"],
+                        a[href$="xlsx"]{
+                            background: url("/static/images/admin/file/excel.png");
+                        }
+                        a[href$="pptx"],
+                        a[href$="ppt"],
+                        a[href$="pptm"],
+                        a[href$="ppsx"],
+                        a[href$="potx"],
+                        a[href$="potm"],
+                        a[href$="ppam"]{
+                            background: url("/static/images/admin/file/point.png");
+                        }
+                    </style>
+                </td>
+            </tr>
+            </tbody>
+
+            <tr>
+                <th class="text-r" width="80">创建时间：</th>
+                <td th:text="${#dates.format(courseExperiment?.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+            <tr>
+                <th class="text-r" width="80">截止时间：</th>
+                <td th:text="${#dates.format(courseExperiment?.endTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+</main>
+
+<footer th:include="admin/common :: footer"></footer>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+    /*用户-编辑*/
+    function show(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+</script>
+
+<script>
+
+    window. addEventListener ('message', function(event) {
+        if(event.data == "1"){
+            var post= document.getElementById("main").offsetHeight;
+            top.postMessage(post, '*');
+            console.log(post);
+        }
+    });
+
+</script>

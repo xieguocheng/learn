@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/lib/datatables/1.10.15/jquery.dataTables.css">
+    <div th:include="admin/common :: head"></div>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/static/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/static/lib/respond.min.js"></script>
+    <![endif]-->
+
+    <title>详情页面</title>
+</head>
+<body>
+
+<div class="cl pd-20" style=" background-color:#5bacb6">
+    <!-- 教师头像默认保存在home/teacherImg -->
+    <img class="avatar size-XL l" src="/static/images/logo/favicon.png">
+    <dl style="margin-left:80px; color:#fff">
+        <dt>
+			<span class="f-18" th:text="${courseTask.title}">
+			</span>
+            <br>
+            <span class="f-14" th:text="总分+${courseTask.totalGrade}+分">
+			</span>
+        </dt>
+
+    </dl>
+</div>
+
+<div class="pd-20">
+    <table class="table">
+        <tbody  th:each="question,questionList : ${questionList}">
+        <tr >
+            <th class="text-r"  width="80" th:text="${questionList.count}+.描述"></th>
+            <td th:if="${question.questionType}==1" th:text="${question.questionDesc}+(【单选题】)"></td>
+            <td th:if="${question.questionType}==2" th:text="${question.questionDesc}+(【不定项选择题】)"></td>
+            <td th:if="${question.questionType}==3" th:text="${question.questionDesc}+(【填空题】)"></td>
+            <td th:if="${question.questionType}==4" th:text="${question.questionDesc}+(【简答题】)">)</td>
+        </tr>
+
+        <tr th:switch="${question.questionType}"  >
+            <th class="text-r">选项</th>
+            <td th:case="1" th:text="${question?.choice}"></td>
+            <td th:case="2" th:text="${question?.choice}"></td>
+        </tr>
+
+        <tr>
+            <th class="text-r" width="80">答案</th>
+            <td th:text="${question?.answer}"></td>
+        </tr>
+
+
+        </tbody>
+    </table>
+</div>
+
+
+<footer th:include="admin/common :: footer"></footer>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/hcharts/Highcharts/5.0.6/js/highcharts.js"></script>
+<script type="text/javascript" src="/static/lib/hcharts/Highcharts/5.0.6/js/modules/exporting.js"></script>
+
+
+<script type="text/javascript">
+
+
+
+
+</script>
+
+</body>
+</html>

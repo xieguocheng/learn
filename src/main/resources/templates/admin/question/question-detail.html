@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" type="text/css" href="/static/lib/datatables/1.10.15/jquery.dataTables.css">
+	<div th:include="admin/common :: head"></div>
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="/static/lib/html5shiv.js"></script>
+	<script type="text/javascript" src="/static/lib/respond.min.js"></script>
+	<![endif]-->
+	<title>详情页面</title>
+</head>
+<body>
+<div class="cl pd-20" style=" background-color:#5bacb6">
+	<!-- 教师头像默认保存在home/teacherImg -->
+	<img class="avatar size-XL l" src="/static/images/logo/favicon.png">
+	<dl style="margin-left:80px; color:#fff">
+		<dt>
+			<span class="f-18" th:if="${question.questionType}==1">单选</span>
+			<span class="f-18" th:if="${question.questionType}==2">不定项选</span>
+			<span class="f-18" th:if="${question.questionType}==3">填空题</span>
+			<span class="f-18" th:if="${question.questionType}==4">简答题</span>
+			 <span class="pl-10 f-12">余额：**</span>
+		</dt>
+		<dd class="pt-10 f-12" style="margin-left:0" th:text="来源 +${question.questionSource}"></dd>
+	</dl>
+</div>
+<div class="pd-20">
+	<table class="table">
+		<tbody>
+			<tr>
+				<th class="text-r" width="80">描述：</th>
+				<td th:text="${question.questionDesc}"></td>
+			</tr>
+			<tr th:switch="${question.questionType}"  >
+				<th class="text-r">选项：</th>
+				<td th:case="1" th:text="${question.choice}"></td>
+				<td th:case="2" th:text="${question.choice}"></td>
+			</tr>
+			<tr>
+				<th class="text-r" width="80">答案：</th>
+				<td th:text="${question?.answer}"></td>
+			</tr>
+			<tr>
+				<th class="text-r" width="80">类型：</th>
+				<td th:text="${courseType?.name}"></td>
+
+				<!--<td th:if="${question.type}==null" >计算机类</td>
+				<td th:if="${question.type}==1" >计算机类</td>
+				<td th:if="${question.type}==2" >数学类</td>-->
+			</tr>
+			<!--<c:if test="${question.questionType eq 1 || question.questionType eq 2 }">
+				<tr>
+					<th class="text-r">选项：</th>
+					<td>${question.choice }</td>
+				</tr>
+			</c:if>-->
+
+		</tbody>
+	</table>
+</div>
+
+<footer th:include="admin/common :: footer"></footer>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--[if lt IE 9]>
+<script type="text/javascript" src="/static/lib/html5shiv.js"></script>
+<script type="text/javascript" src="/static/lib/respond.min.js"></script>
+<![endif]-->
+
+<div th:include="admin/common :: head"></div>
+<link rel="stylesheet" type="text/css" href="/static/lib/datatables/1.10.15/jquery.dataTables.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link href="/static/css/main.css" rel="stylesheet" type="text/css"/>
+<link href="/static/lib/layui/layui.css" rel="stylesheet" type="text/css">
+
+
+
+<style type="text/css">
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    body{
+        color: #666;
+        background: #efefef;
+        font-weight: lighter;
+        width: 100%;
+    }
+    h1,h2,h3{
+        font-weight: lighter;
+    }
+    ul,li{
+        margin: 0;
+        list-style: none;
+        padding: 0;
+    }
+    #main{
+        width: 76%;
+        margin: 1% auto;
+        padding: 1.5% 4%;
+        background: white;
+        box-shadow: 0 0 10px #ddd;
+        border-radius: 15px;
+        height: min-content;
+    }
+    #main div.mt-20 table#sheetList{
+        border: 0;
+        border-collapse:collapse;
+    }
+    #main div.mt-20 table#sheetList thead{
+        color: #666;
+    }
+    #main div.mt-20 table#sheetList thead th{
+        font-weight: lighter;
+        background-color: #ddd;
+        font-size: 100%;
+        border: 0;
+    }
+    #main div.mt-20 table#sheetList tbody{
+        border: 0;
+    }
+    #main div.mt-20 table#sheetList tbody tr{
+        height: 5em;
+        border: 0;
+    }
+    #main div.mt-20 table#sheetList tbody tr:nth-child(2n){
+        background:#efefef;
+    }
+    #main div.mt-20 table#sheetList tbody tr td{
+        line-height: 5em;
+
+        border: 0;
+    }
+    #main div.mt-20 table#sheetList tbody tr td img{
+        line-height: 5em;
+        width: 4em;
+        height: 4em;
+        margin: .5em 0;
+    }
+    .type{
+        position:absolute;
+        top:144px;
+        left:166px;
+        height:22px;
+        width:90px;
+        border:1px solid lightgray;
+        z-index: 10;
+    }
+
+    th {
+        text-align: center;
+    }
+
+    .table td {
+        text-align: center;
+    }
+</style>
+
+<main id="main">
+
+
+    <div class="page-container">
+        <div class="mt-20">
+
+            <table id="sheetList" class="table table-border table-bordered table-bg table-hover table-sort">
+                <thead>
+                <tr class="text-c">
+                    <!--<th width="25">
+                        <input type="checkbox" name="" value="">
+                    </th>-->
+                    <th width="100">头像</th>
+                    <th width="80">姓名</th>
+                    <th width="150">学号</th>
+                    <th width="50">性别</th>
+                    <th width="150">手机</th>
+                    <th width="150">邮箱</th>
+                    <th width="150">加入时间</th>
+                    <th width="100">操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr  th:each="user,userList : ${userList}" >
+                    <!--<td><input type="checkbox" th:value="${user.userId}"  name=""></td>-->
+                    <td><img width="50" height="50" th:src="${user.userImg}"></td>
+                    <td >
+                        <u style="cursor:pointer" class="text-primary" th:text="${user.username}"
+                           th:onclick="|user_show('用户详情','/admin/user/userDetail/${user.userId }','${user.userId}','360','450')|">
+                        </u>
+                    </td>
+                    <td th:text="${user.number}"></td>
+
+                    <td th:if="${user.sex}==0" >未知</td>
+                    <td th:if="${user.sex}==1" >男</td>
+                    <td th:if="${user.sex}==2" >女</td>
+
+                    <td th:text="${user.telephone}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${#dates.format(user.createTime, 'yyyy-MM-dd')}"></td>
+
+                    <td class="td-manage">
+                        <a title="停用" style="text-decoration:none" onClick="member_stop(this,'10001')" href="javascript:;" >
+                            <i class="Hui-iconfont">&#xe631;</i></a>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+<!--<footer th:include="admin/common :: footer"></footer>
+&lt;!&ndash;请在下方写此页面业务相关的脚本&ndash;&gt;
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+
+<script type="text/javascript">
+
+    $(function(){
+        $('.table-sort').dataTable({
+            "aaSorting": [
+                [
+                    1,"desc"
+                ]
+            ],//默认第几个排序
+            "bStateSave": true,//状态保存
+            "aoColumnDefs": [
+                //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+                {"orderable":false,"aTargets":[0]}// 制定列不参与排序
+            ]
+        });
+
+    });
+</script>-->
+
+
+<script>
+
+    // window. addEventListener ('message', function(event) {
+    //     if(event.data == "1"){
+    //         var post= document.getElementById("main").offsetHeight;
+    //         top.postMessage(post, '*');
+    //         console.log(post);
+    //     }
+    // });
+
+</script>

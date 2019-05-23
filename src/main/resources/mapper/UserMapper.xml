@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.learn.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.learn.pojo.User" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="school_id" property="schoolId" jdbcType="INTEGER" />
+    <result column="dept" property="dept" jdbcType="VARCHAR" />
+    <result column="identity" property="identity" jdbcType="INTEGER" />
+    <result column="user_img" property="userImg" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="delete_status" property="deleteStatus" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+
+
+
+  <!--List:forech中的collection属性类型是List,collection的值必须是:list,item的值可以随意,Dao接口中参数名字随意 -->
+  <select id="getUserListByUserIds" resultType="User"  resultMap="BaseResultMap">
+    select *
+    from user u
+    where u.user_id in
+    <foreach collection="list" item="userId" index="index"
+             open="(" close=")" separator=",">
+      #{userId}
+    </foreach>
+  </select>
+
+
+
+
+
+</mapper>

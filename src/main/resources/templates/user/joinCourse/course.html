@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title>子鹿班课-用户端-JOIN</title>
+    <meta charset="utf-8">
+
+    <style>
+        @font-face {
+            font-family: 'iconfont';
+            src: url(data:application/font-woff2;charset=utf-8;base64,d09GMgABAAAAAALUAA0AAAAABqwAAAKAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP0ZGVE0cGh4GVgCCQhEICoEcgS0LCgABNgIkAxAEIAWFCAcxG8kFyJ4D7uYy0uZoqz+PCpcEI9qW8fA19r9zd/eLSfqYSlKf/hqNIUHIYiUTiphlhvjs4X417+9Sg27TNlbqgkTU2+gLO7rm8wMOrsbDKJCe/1uGt/WiKOHjusQKsPRTdmxD3eyfQgvZqZv6LcLJ7zYx4i7a9hTwA0WBr2GLsjCRLgvYA6HMGpw3HWxLTwI3IeD57Uk8h1f/t6Pq0YRm9IIkZFkoSIgibqghXUtfXAf3x19zgyepyVTf7jPhHHw/OsYlWqoeDlHgHAKQkTGMwHIigWFi46Aogh97/qvgW8+AAKKWAERCAgAE9BOOalUCBdQjMAdsA1AAEHMqa9q8++m7+wieDzGGJoTTAUpo58GV+43wRf9AlluCkHePxm112nnuLzgGlNeHPxgA735WhaOVZaxg7Qrl6aNwVDhZH51WTHsetesdLanVxdr+rPC1HBcvLzzTvvypSuBzezIcOmag3gAIBPeOTKiPKl3/+KaiKs5LV3/mSjaAegkE1ec1FECuIABAKYCCwnGEYg4CCY0aUQXQ6VEAehgRCPX2I5DUuYxAVu+qAEW9mwLUaPJQgFr1PgvQaFr4CDTpiksWpQFTQdNDu4CetDqsZ+16UtHW9Rq99vVa7S71Rge9dTeZiJXEOh15aUztOSoZI7gsq6mhkMMkNO6Mox4K/aCeDlsO9KeBvfKKemrSOvD/Ga91fhE+KK+jq5xUsTGzwspJ3DZztlNpU3ZDXiede7r6iuwYK1Ap6GiqU4l4UZRXU9Ok0tK/UpGXxcyw7e7t9ot25sJaC90wRVMe9hfvc8A5jLU4WFgUfE6aZTXVYSqM4ozmTGgsYd2WCI1sSUFIkWoHAQ==) format('woff2'),
+            url(data:application/font-woff;charset=utf-8;base64,d09GRgABAAAAAASMAA0AAAAABqwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEcAAAABoAAAAch5MFx0dERUYAAARQAAAAHgAAAB4AKQAKT1MvMgAAAaAAAABCAAAAVjy/SENjbWFwAAAB9AAAAD4AAAFCAA/p/Gdhc3AAAARIAAAACAAAAAj//wADZ2x5ZgAAAkAAAACcAAAAnBYkvdBoZWFkAAABMAAAADAAAAA2FOgiyGhoZWEAAAFgAAAAHQAAACQHVwOFaG10eAAAAeQAAAAPAAAAEAwAAGFsb2NhAAACNAAAAAoAAAAKAE4AAG1heHAAAAGAAAAAHwAAACABDwA9bmFtZQAAAtwAAAFJAAACiCnmEVVwb3N0AAAEKAAAAB8AAAAxznR42XjaY2BkYGAA4u1xCh/j+W2+MnCzMIDAje/58XA68f9z5kpmNSCXg4EJJAoAUSYMB3jaY2BkYGBu+N/AEMPCAALMlQyMDKiABQBP8QLlAAAAeNpjYGRgYGBhMGQA0QwMTEDMBYQMDP/BfAYADZYBTQB42mNgZGFgnMDAysDA1Ml0hoGBoR9CM75mMGLkAIoysDIzYAUBaa4pDA7PAp8FMjf8b2CIYW5gaAAKM4LkAOdlDH0AAHjaY2GAABYITgQAAOEAbgB42mNgYGBmgGAZBkYGELAB8hjBfBYGBSDNAoRA/rPA//8hpOQmqEoGRjYGGJOBkQlIMDGgAkaGYQ8AlawH8QAAAAAAAAAAAAAATgAAAAEAYf/nA3kDJgAwAAAFIi8BJjY3Njc2JicuAgYHDgEXHgE3MR4BFAYjBiYnJjY3PgEeARceAQcGBxcWDgEDWA0K3wkCCQ4NPgE/Jmd0aihGA0UoazsOEhINSYQyVQNYMYKQgC9OAU0FBcoJARMZCvAKGgoNDk7ATS0xAy0qUMtQLS4BAREcEgE5N2T7YjU3Az03X+5gBgXaChkTeNp9kD1OAzEQhZ/zByQSQiCoXVEA2vyUKRMp9Ailo0g23pBo1155nUg5AS0VB6DlGByAGyDRcgpelkmTImvt6PObmeexAZzjGwr/3yXuhBWO8ShcwREy4Sr1F+Ea+V24jhY+hRvUf4SbuFUD4RYu1BsdVO2Eu5vSbcsKZxgIV3CKJ+Eq9ZVwjfwqXMcVPoQb1L+EmxjjV7iFa2WpDOFhMEFgnEFjig3jAjEcLJIyBtahOfRmEsxMTzd6ETubOBso71dilwMeaDnngCntPbdmvkon/mDLgdSYbh4FS7YpjS4idCgbXyyc1d2oc7D9nu22tNi/a4E1x+xRDWzU/D3bM9JIbAyvkJI18jK3pBJTj2hrrPG7ZynW814IiU68y/SIx5o0dTr3bmniwOLn8owcfbS5kj33qBw+Y1kIeb/dTsQgil2GP5PYcRkAAAB42mNgYoAALjDJyIAOWMCiTIxMbMWpiUXJGQALmQKUAAAAAAH//wACAAEAAAAMAAAAFgAAAAIAAQADAAMAAQAEAAAAAgAAAAB42mNgYGBkAIKrS9Q5QPSN7/nxMBoARDcG5AAA) format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .iconfont {
+            font-family: "iconfont" !important;
+            font-size: 16px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .icon-search:before {
+            content: "\e651";
+            font-size: 120%;
+        }
+
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            color: #666;
+            background: #efefef;
+            font-weight: lighter;
+            width: 100%;
+        }
+
+        ::-webkit-scrollbar
+        {
+            width: 0em;
+        }
+
+
+        nav a{
+            display: block;
+            color: #666;
+            text-decoration: none;
+            height: 64px;
+            overflow: hidden;
+            text-align: center;
+            line-height: 64px;
+            padding: 0 2em;
+        }
+        nav a:visited,a:link{
+            color:#999;
+        }
+        nav a:hover{
+            background: #666;
+            color: white;
+        }
+        h1,h2,h3{
+            font-weight: lighter;
+        }
+        ul,li{
+            margin: 0;
+            list-style: none;
+            padding: 0;
+        }
+        nav .home{
+            position: relative;
+            left: -62%;
+        }
+        nav.head{
+            width: 90%;
+            padding: 0 5%;
+            background: white;
+            display: flex;
+            height: min-content;
+            justify-content: flex-end;
+            box-shadow: 0 0 10px #ddd;
+        }
+        nav.head a div.user{
+            display: flex;
+        }
+        nav.head a div.user img{
+            height: 43px;
+            width: 43px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-top: 10.5px;
+            margin-right: 1.5em;
+        }
+        #courseHead{
+            width: 64%;
+            margin: 2% auto;
+            padding: 1% 6%;
+            background: white;
+            box-shadow: 0 0 10px #ddd;
+            border-radius: 15px;
+        }
+        header{
+
+            display: flex;
+        }
+        header .img{
+            width: 9em;
+            height: 9em;
+            border-radius: 15px;
+            overflow:hidden;
+
+        }
+        header .img img{
+            width: 100%;
+            height: 100%;
+        }
+        header section{
+            margin-left: 4%;
+
+            line-height: 1.5;
+            font-size: 110%;
+
+        }
+        header section .desc {
+            line-height: 1.6;
+            padding-top: .5em;
+            height: 3.5em;
+        }
+        header section .desc h3{
+            color: black;
+        }
+        header section .desc p{
+            display: inline-block;
+        }
+        header section .desc p:last-child{
+            margin-left: 5%;
+        }
+        .nav{
+
+        }
+        .nav ul li{
+            display: inline-block;
+        }
+        .nav ul li a{
+            display: block;
+            text-decoration: none;
+            color: #999;
+            cursor: pointer;
+            position: relative;
+            z-index: 5;
+            width: 8em;
+            height: 3em;
+            text-align: center;
+            line-height: 3em;
+
+            margin-top: 1em;
+        }
+        .nav ul li a.selected
+        {
+            color: black;
+            border-bottom: .2em solid #666;
+            cursor: default;
+        }
+        #create{
+            border-radius: 50%;
+            color: white;
+            font-size: 250%;
+            width: 1em;
+            height: 1em;
+            line-height: .8em;
+            background:#666;
+            border: 0;
+            outline: 0;
+            cursor: pointer;
+            position: relative;
+            right: -8em;
+            bottom: -2.5em;
+        }
+        #create:active{
+            background:#bbb;
+        }
+
+    </style>
+
+</head>
+<body>
+
+
+<nav class="head">
+    <a href="/user/courseList" class="home" >← Home</a>
+    <a href="">
+        <div class="user">
+            <img th:src="${session.user.userImg}" >
+            <p th:text="${session.user.username }"></p>
+        </div>
+    </a>
+    <a href="/user/loginout" class="logout">Logout</a>
+</nav>
+
+<div id="courseHead">
+    <header>
+
+        <div class="img">
+            <a style="text-decoration:none" class="ml-5"
+               th:onclick="|show('查看加入课程详情','/user/joinCourse/courseDetail/${courseId}','${courseId}')|"
+               href="javascript:;" title="查看课程详情">
+                <img th:src="${courseDTO.courseImg}">
+            </a>
+        </div>
+
+        <section>
+            <div class="desc">
+                <h3 class="c_name" th:text="'加入的课程【'+${courseDTO.courseName}+'】'"></h3>
+                <p class="t_name" th:text="${courseDTO.teacher.username}"></p>
+                <p th:text="班课号+${courseDTO.classnum}"></p>
+            </div>
+
+            <div class="nav">
+                <ul>
+                    <li><a class="selected" id="activity" th:text="'Activity:'+${courseDTO.courseExperimentList.size()}" th:onclick="|selectA()|"></a></li>
+                    <li><a id="member" th:text="'Member:'+${courseDTO.userList.size()}" th:onclick="|selectM()|"></a></li>
+
+                </ul>
+            </div>
+        </section>
+
+        <!--<div class="create">
+            <a style="text-decoration:none" class="ml-5"
+               th:onclick="|show('新增实验','/user/createCourse/Experiment/addPage/${courseId}','${courseId}')|"
+               href="javascript:;" title="新增实验">
+                <button id="create">+</button>
+            </a>
+        </div>-->
+
+
+    </header>
+</div>
+
+<script>
+    function $(id){
+        return document.getElementById(id);
+    }
+    function setIframeHeight(iframe) {
+        if (iframe) {
+            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+            if (iframeWin.document.body) {
+                iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+            }
+        }
+
+    };
+        var ac = $("activity"),
+            mem = $("member"),
+
+            ifm = $("myiframe"),
+            ifm1 = $("myiframe1");
+
+        function selectA(){
+            ac.className="selected";
+            mem.className="";
+
+            ifm.style.display="block";
+            ifm1.style.display="none";
+        };
+        function selectM(){
+
+            ac.className="";
+            mem.className="selected";
+
+            ifm.style.display="none";
+            ifm1.style.display="block";
+            setIframeHeight(ifm1);
+    }
+</script>
+
+<iframe th:src="@{'/user/joinCourse/experimentList?courseId='+${courseId}}" name="myiframe" id="myiframe" width="100%" frameborder="0" scrolling="no"></iframe>
+<iframe th:src="@{'/user/joinCourse/userList?courseId='+${courseId}}" name="myiframe1" id="myiframe1" width="100%" frameborder="0" scrolling="no" style="display:none"></iframe>
+
+<script type="text/javascript">
+    // var flag = 0,
+         ifm = document.getElementById("myiframe"),
+         ifm1 = document.getElementById("myiframe1");
+
+
+
+    // window. addEventListener ('message', function(event) {
+    //     if(flag == 0){
+    //         console.log(event.data);
+    //         ifm.style.height= event.data +50 +"px";
+    //         ifm1.contentWindow.postMessage("1","*");
+    //         flag = 1;
+    //     }
+    //     else{
+    //
+    //         ifm1.style.height= event.data +50 +"px";
+    //         ifm1.style.display="none";
+    //     }
+    // });
+
+    function reinitIframe(){
+        var iframe = document.getElementById("myiframe");
+        try{
+            var bHeight = iframe.contentWindow.document.body.scrollHeight;
+            var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+            var height = Math.max(bHeight, dHeight);
+            iframe.height = height;
+        }catch (ex){}
+    }
+    window.setInterval("reinitIframe()", 200);
+</script>
+
+
+<footer th:include="admin/common :: footer"></footer>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+    /*用户-编辑*/
+    function show(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+</script>
+
+</body>
+</html>

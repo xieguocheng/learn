@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.learn.mapper.CourseMapper" >
+  <resultMap id="BaseResultMap" type="com.learn.pojo.Course" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="course_id" property="courseId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+    <result column="classnum" property="classnum" jdbcType="VARCHAR" />
+    <result column="added" property="added" jdbcType="INTEGER" />
+    <result column="course_type" property="courseType" jdbcType="INTEGER" />
+    <result column="course_img" property="courseImg" jdbcType="VARCHAR" />
+    <result column="request" property="request" jdbcType="VARCHAR" />
+    <result column="classname" property="classname" jdbcType="VARCHAR" />
+    <result column="semeter" property="semeter" jdbcType="VARCHAR" />
+    <result column="examin" property="examin" jdbcType="VARCHAR" />
+    <result column="question_list_id" property="questionListId" jdbcType="VARCHAR" />
+    <result column="speed" property="speed" jdbcType="VARCHAR" />
+    <result column="sign" property="sign" jdbcType="VARCHAR" />
+    <result column="people" property="people" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="introduction" property="introduction" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+
+  <!--List:forech中的collection属性类型是List,collection的值必须是:list,item的值可以随意,Dao接口中参数名字随意 -->
+  <select id="getCourseListByCourseIds" resultType="Course"  resultMap="BaseResultMap">
+    select *
+    from course c
+    where c.course_id in
+    <foreach collection="list" item="courseId" index="index"
+             open="(" close=")" separator=",">
+      #{courseId}
+    </foreach>
+  </select>
+
+
+</mapper>
+
+
+
+

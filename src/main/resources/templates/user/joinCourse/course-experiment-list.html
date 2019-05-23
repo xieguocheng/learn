@@ -1,0 +1,189 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<style type="text/css">
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    body{
+        color: #666;
+        background: #efefef;
+        font-weight: lighter;
+        width: 100%;
+    }
+    h1,h2,h3{
+        font-weight: lighter;
+    }
+    ul,li{
+        margin: 0;
+        list-style: none;
+        padding: 0;
+    }
+    main{
+        width: 64%;
+        margin: 1% auto;
+        padding: 1.5% 6%;
+        background: white;
+        box-shadow: 0 0 10px #ddd;
+        border-radius: 15px;
+        height: min-content;
+    }
+
+
+    main .content{
+        margin-top: 1.5em;
+        padding-bottom: 1.5em;
+        position: relative;
+    }
+    main .content .radio{
+        border-bottom: thin solid #ddd;
+        padding-bottom: .5em;
+    }
+    main .content .radio label{
+        margin-right: .8em;
+        cursor: pointer;
+    }
+    main .content .radio .search{
+        display: inline-block;
+    }
+    main .content .radio .search input{
+        border:0;
+        border-bottom: thin solid #999;
+        font-size: 120%;
+        color: #666;
+        width: 8em;
+        outline: 0;
+        padding: 0 .5em;
+    }
+
+    main .content .ac_list{
+
+    }
+    main .content .ac_list a.row{
+        display: block;
+        color: #666;
+        text-decoration: none;
+        border-bottom: thin solid #ddd;
+        transition: all .5s;
+        padding: .8em 3em;
+
+    }
+    main .content .ac_list a.row:last-child{
+        border-bottom:0;
+    }
+    main .content .ac_list a.row:hover{
+        background:#efefef;
+    }
+    main .content .ac_list a.row div.rowImg{
+        width: 5em;
+        height: 5em;
+
+        display: inline-block;
+    }
+    main .content .ac_list a.row div.rowImg img{
+        width: 100%
+    }
+    main .content .ac_list a.row .ac_desc{
+        display: inline-block;
+        padding-left: 1em;
+        vertical-align: top;
+        height: 5em;
+        width: calc(99% - 6em);
+    }
+    main .content .ac_list a.row .ac_desc .row1,
+    main .content .ac_list a.row .ac_desc .row2{
+        display: block;
+        height: 2.5em;
+    }
+    main .content .ac_list a.row .ac_desc .row2{
+
+    }
+    main .content .ac_list a.row .ac_desc .row1 p{
+        display: inline-block;
+        font-weight: normal;
+    }
+    main .content .ac_list a.row .ac_desc .row1 .status{
+        float: right;
+    }
+    .t{
+        color:green !important;
+    }
+    .f{
+        color: red !important;
+    }
+    main .content .ac_list a.row .ac_desc .row2 p{
+
+        display: inline-block;
+    }
+    main .content .ac_list a.row .ac_desc .row2 p:last-child{
+
+    }
+    main .content .ac_list a.row .ac_desc .cell{
+        line-height: 2.5em;
+    }
+</style>
+
+<main id="main">
+    <div class="content">
+        <div class="radio">
+            <label for="all"><input name="status" type="radio" id="all" checked="checked">All</label>
+
+            <label for="on"><input name="status" type="radio" id="on">Ongoing</label>
+
+            <label for="com"><input name="status" type="radio" id="com">Completed</label>
+            <div class="search">
+                <span  class="iconfont icon-search"></span>
+                <input type="text" name="" class="">
+            </div>
+
+
+        </div>
+        <div class="ac_list">
+            <a th:href="@{'/user/joinCourse/ExperimentDetail?courExperimentId='+${courseExperiment.courExperimentId}}" class="row"
+               th:each="courseExperiment,courseExperimentList : ${courseExperimentList}">
+                <div class="rowImg">
+                    <img src="/static/images/admin/file/file.png" alt="">
+                </div>
+                <div class="ac_desc">
+                    <div class="row1">
+                        <p class="cell title" th:text="${courseExperiment?.title}"></p>
+                        <p class="cell status t" th:if="${courseExperiment?.status}==0" style="color:red !important;">已结束</p>
+                        <p class="cell status t" th:if="${courseExperiment?.status}==1"style="color:green !important;">进行中</p>
+                    </div>
+                    <div class="row2">
+                        <!--<p class="cell t">已提交</p>-->
+                        <p class="cell t" th:if="${courseExperiment?.userExperiment?.status}==0" th:text="未提交" style="color:red !important;"></p>
+                        <p class="cell t" th:if="${courseExperiment?.userExperiment?.status}==1" th:text="已提交" style="color:green !important;"></p>
+
+                        <p class="cell"
+                           th:text="'结束时间 '+${#dates.format(courseExperiment?.endTime, 'yyyy-MM-dd')}">
+                        </p>
+                        <p class="cell" th:if="${courseExperiment?.overSubmit}==0" th:text="'超时提交 '+'不允许'"></p>
+                        <p class="cell" th:if="${courseExperiment?.overSubmit}==1" th:text="'超时提交 '+'允许'"></p>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+</main>
+
+<script>
+    // window.onload=function(){
+    //     var post= document.getElementById("main").offsetHeight;
+    //     // frame.contentWindow. postMessage (post, '*');
+    //     top.postMessage(post, '*')
+    // }
+</script>
+
+<footer th:include="admin/common :: footer"></footer>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+    /*用户-编辑*/
+    function add_experiment(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+</script>

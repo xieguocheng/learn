@@ -1,0 +1,257 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <link rel="stylesheet" type="text/css" href="/static/lib/datatables/1.10.15/jquery.dataTables.css">
+    <div th:include="admin/common :: head"></div>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/static/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/static/lib/respond.min.js"></script>
+    <![endif]-->
+
+    <style type="text/css">
+        .type{
+            position:absolute;
+            top:144px;
+            left:166px;
+            height:22px;
+            width:90px;
+            border:1px solid lightgray;
+            z-index: 10;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <title>超级管理员管理</title>
+</head>
+
+<body>
+
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>超级管理员
+    <span class="c-gray en">&gt;</span>超级管理员管理
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+       href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+
+<div class="cl pd-5 bg-1 bk-gray mt-20">
+
+    <span class="l">
+        <a href="javascript:;" class="btn btn-primary radius"
+           th:onclick="|add('新增管理','/admin/userSuper/AddPage')|">
+		<i class="Hui-iconfont">&#xe600;</i> 新增管理</a>
+
+		<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius">
+		<i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+	</span>
+    <span class="r" >共有数据：<div style="display:inline;line-height:31px" th:text="${userSuperList.size()} ">条</div></span>
+</div>
+
+<div class="page-container">
+    <div class="mt-20">
+        <table id="sheetList" class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+            <tr class="text-c">
+                <th width="25"><input type="checkbox" name="" value=""></th>
+                <th width="80">ID</th>
+                <th width="100">姓名</th>
+                <th width="40">性别</th>
+                <th width="90">手机</th>
+                <th width="150">邮箱</th>
+                <th width="200">简介</th>
+                <th width="130">创建时间</th>
+                <th width="70">状态</th>
+                <th width="100">操作</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr  th:each="userSuper,userSuperList : ${userSuperList}" >
+                <td><input type="checkbox" th:value="${userSuper.id}"  name=""></td>
+                <td th:text="${userSuper.id}"></td>
+                <td th:text="${userSuper.username}"></td>
+
+                <td th:if="${userSuper.sex}==0" >男</td>
+                <td th:if="${userSuper.sex}==1" >女</td>
+
+                <td th:text="${userSuper.telephone}"></td>
+                <td th:text="${userSuper.email}"></td>
+                <td th:text="${userSuper.userIntro}"></td>
+                <td th:text="${#dates.format(userSuper.createTime, 'yyyy-MM-dd')}"></td>
+
+                <td th:if="${userSuper.status}==2" >
+                    <span class="label label-success radius">超级管理员</span>
+                </td>
+                <td th:if="${userSuper.status}==1" >
+                    <span class="label label-secondary radius">普通管理员</span>
+                </td>
+                <td th:if="${userSuper.status}==0" >
+                    <span class="label alert-success radius">管理员停用</span>
+                </td>
+
+
+
+                <td class="td-manage">
+                    <a title="停用" style="text-decoration:none" href="javascript:;"
+                       th:onclick="|javascript:userSuper_stop(this,'${userSuper.id }')|"  >
+                        <i class="Hui-iconfont" th:if="${userSuper.status}==1">&#xe631;</i></a>
+                    <a title="启用" style="text-decoration:none" href="javascript:;"
+                       th:onclick="|javascript:userSuper_start(this,'${userSuper.id }')|"  >
+                        <i class="Hui-iconfont"th:if="${userSuper.status}==0">&#xe6e1;</i></a>
+
+                    <a title="编辑"  th:onclick="|javascript:question_edit('编辑','/admin/course/courseEditPage/${userSuper.id }','4','','510')|"
+                       class="ml-5" style="text-decoration:none">
+                        <i class="Hui-iconfont">&#xe6df;</i></a>
+                    <a title="删除" href="javascript:;" th:onclick="|javascript:question_del(this,'${userSuper.id }')|"
+                       class="ml-5" style="text-decoration:none">
+                        <i class="Hui-iconfont">&#xe6e2;</i></a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+
+
+
+
+<footer th:include="admin/common :: footer"></footer>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+
+
+<script type="text/javascript">
+    $(function(){
+        $('.table-sort').dataTable({
+            "aaSorting": [
+                [
+                    1,"desc"
+                ]
+            ],//默认第几个排序
+            "bStateSave": true,//状态保存
+            "aoColumnDefs": [
+                //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+                {"orderable":false,"aTargets":[0,8,9]}// 制定列不参与排序
+            ]
+        });
+
+    });
+    /*用户-添加*/
+    function add(title,url,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*用户-查看*/
+    function member_show(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+
+
+
+
+    /*用户-停用*/
+    function userSuper_stop(obj,id){
+        layer.confirm('确认要停用吗？',function(index){
+            $.ajax({
+                type: "POST",
+                url: "/admin/userSuper/userSuperStop",
+                data: {
+                    id:id,
+                },
+                success: function(data){
+                    //var data = eval('(' + data + ')');
+                    if (data.code === 200){
+                        $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" ' +
+                            'onClick="userSuper_start(this,'+id+')" href="javascript:;" title="启用">' +
+                            '<i class="Hui-iconfont">&#xe6e1;</i></a>');
+                        $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
+                        $(obj).remove();
+                        layer.msg('已停用!',{icon: 5,time:1000});
+                        location.replace(location.href);
+                    }else{
+                        alert("发生错误!请重新操作");
+                    }
+                }
+            });
+        });
+
+    }
+
+    /*用户-启用*/
+    function userSuper_start(obj,id){
+
+        layer.confirm('确认要启用吗？',function(index){
+            $.ajax({
+                type: "POST",
+                url: "/admin/userSuper/userSuperStart",
+                data: {
+                    id:id,
+                },
+                success: function(data){
+                    //var data = eval('(' + data + ')');
+                    if (data.code === 200){
+                        $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" ' +
+                            'onClick="userSuper_stop(this,'+id+')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
+                        $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">正常</span>');
+                        $(obj).remove();
+                        layer.msg('已启用!',{icon: 6,time:1000});
+                        location.replace(location.href);
+                    }else{
+                        alert("发生错误!请重新操作");
+                    }
+                }
+            });
+        });
+    }
+
+
+
+
+
+    /*用户-编辑*/
+    function userHr_edit(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*密码-修改*/
+    function change_password(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*用户-删除*/
+    function userHr_del(obj,id){
+        layer.confirm('确认要删除吗？',function(index){
+            $.ajax({
+                type: "POST",
+                url: "${pageContext.request.contextPath}/userHr/userHrDelete",
+                data: {
+                    userHrId:id,
+                },
+                success: function(data){
+                    var data = eval('(' + data + ')');
+                    if (data.status==1){
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!',{icon:1,time:1000});
+                        /* 不需要重新请求链接 */
+                        /* location.href="${pageContext.request.contextPath}/teacher/teacherList" */
+                    }else{
+                        alert("发生错误!请重新操作");
+                    }
+                }
+            });
+        });
+    }
+</script>
+
+</body>
+</html>

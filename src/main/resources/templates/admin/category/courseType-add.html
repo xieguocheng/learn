@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <link rel="stylesheet" type="text/css" href="/static/lib/datatables/1.10.15/jquery.dataTables.css">
+    <div th:include="admin/common :: head"></div>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/static/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/static/lib/respond.min.js"></script>
+    <![endif]-->
+
+
+    <script type="text/javascript">
+        $(function(){
+            init_city_select($("#district"));
+        });
+    </script>
+
+    <title></title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+</head>
+<body>
+<article class="page-container">
+    <form action="/admin/userSuper/addd" class="form form-horizontal" id="form-teacher-add" method="POST">
+
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">课类名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <textarea name="courseType" cols="" rows="" class="textarea"
+                          placeholder="说点什么...最少输入10个字符"
+                          onKeyUp="$.Huitextarealength(this,100)">
+                </textarea>
+                <p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
+            </div>
+        </div>
+
+
+
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+
+
+    </form>
+</article>
+
+<footer th:include="admin/common :: footer"></footer>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/static/lib/webuploader/0.1.5/webuploader.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $("#form-teacher-add").validate({
+            rules:{
+                courseType:{
+                    required:true,
+                }
+
+
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                //这里使用异步提交是为了验证区域存不存在
+                //form.submit();
+
+                /* alert(5456);
+                $(form).ajaxSubmit({
+
+                    url : "${pageContext.request.contextPath}/teacher/teacherAdd",
+                    type : "POST",
+                    data : fd,
+                    dataType : "json",
+                    processData : false, // 告诉jQuery不要去处理发送的数据
+                    contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+                    success: function(data){
+                        if (data.status==1){
+                            alert("添加教师成功");
+                            location.href="${pageContext.request.contextPath}/teacher/teacherList";
+                        }else{
+                            alert("添加失败！");
+                        }
+                    }
+                }); */
+
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.$('.btn-refresh').click();
+                //parent.layer.close(index);
+
+                var fd = new FormData($("#form-teacher-add")[0]);
+                $.ajax({
+                    url : "/admin/userSuper/addd",
+                    type : "post",
+                    data : fd,
+                    dataType : "json",
+                    processData : false, // 告诉jQuery不要去处理发送的数据
+                    contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+                    success: function(data){
+                        if (data.code === 200){
+                            alert("添加成功");
+                            parent.layer.close(index);
+                        }else if(data.code === 400){
+                            alert("请选择照片！");
+                        }else{
+                            alert("添加失败！");
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

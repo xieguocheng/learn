@@ -1,0 +1,256 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<link rel="Bookmark" href="../../static/favicon.ico" type="image/x-icon" >
+	<link rel="shortcut Icon" href="../../static/favicon.ico" type="image/x-icon"/>
+	<title>子鹿班课-LOGIN</title>
+	<link rel="stylesheet" href="/static/css/admin/login.css">
+
+	<script type="text/javascript">
+		window.onload=function()
+		{
+
+			var
+				weekday=['Mon','Tue','Wed','Thur','Fri','Sun','Sat'],
+				t=new Date();
+
+            $("h1#timer") .html(t.getFullYear()+"/"+two((t.getMonth()+1))+"/"+two(t.getDate())+" "+weekday[t.getDay()-1]+" "+two(t.getHours())+":"+two(t.getMinutes())+":"+two(t.getSeconds()));
+
+			setInterval(function()
+			{
+				t=new Date();
+                $("h1#timer").html(t.getFullYear()+"/"+two((t.getMonth()+1))+"/"+two(t.getDate())+" "+weekday[t.getDay()-1]+" "+two(t.getHours())+":"+two(t.getMinutes())+":"+two(t.getSeconds()));
+			},1000);
+
+			var login_btn=$("#login-btn"),
+				loginframe=$("#loginframe"),
+				login_close=$("#login-close"),
+				phone_switch=$("#phone-swtich"),
+				login=$("#login"),
+				login_phe=$("#phone-login"),
+				account_swtich=$("#account-swtich");
+
+            login_btn.click(function(){
+                loginframe.css("left","calc(50% - 12em)");
+            });
+			login_close.click(function(){
+                loginframe.css("left","-30em");
+			});
+			phone_switch.click(function(){
+				login.css("animation","ToOpacity 1.2s forwards");
+				loginframe.css("animation","ToForward 2.2s forwards");
+				setTimeout(function(){
+					login.css("display","none");
+					login_phe.css("display","block");
+					login_phe.css("animation","ToVisible 1.2s forwards");
+					setTimeout(function(){
+						loginframe.css("animation","none");
+					},1200);
+				},1000);
+
+			});
+			account_swtich.click(function(){
+				login_phe.css("animation","ToOpacity 1.2s forwards");
+				loginframe.css("animation","ToForward 2.2s forwards");
+				setTimeout(function(){
+					login_phe.css("display","none");
+					login.css("display","block");
+					login.css("animation","ToVisible 1.2s forwards");
+					setTimeout(function(){
+						loginframe.css("animation","none");
+					},1200);
+				},1000);
+			});
+		}
+		function two(x)
+		{
+			return x<10?"0"+x:x;
+		}
+	</script>
+
+</head>
+<body>
+	<div class="pencil"></div>
+	<div class="logo"></div>
+	<section class="welcome" id="welcome">
+		<div  class="timer"><h1 id="timer"></h1></div>
+		<h2>Mobile Intelligent Learning Platform</h2>
+		<p>The greater the capacity<br>The greater the responsibility.</p>
+	</section>
+	<main class="main">
+		<div class="main-content">
+			<button id="login-btn">Log In</button>
+		</div>
+	</main>
+	<div class="loginframe" id="loginframe">
+		<button id="login-close">X</button>
+		<div class="login" id="login">
+			<h2>Login to your account</h2>
+<!------------------------------------表单提交开始---------------------------------->
+			<form action="#" th:action="@{/login}" method="post">
+				<div class="login-t">
+					<label for="account" class="iconfont icon-user"></label>
+					<input type="text" id="account" autocomplete="off"
+						   placeholder="account number" name="username" class="first_line">
+					<label for="password" class="iconfont icon-lock"></label>
+					<input type="password" id="password" placeholder="password" name="password">
+				</div>
+
+				<div th:if="${param.error}" style="
+				     position: absolute;
+				     top: 34.5%;
+				     left: 12%;
+    				font-size: 90%;" >
+					非法的账号或密码
+				</div>
+				<input type="submit" value="Login" class="submit">
+			</form>
+
+<!------------------手机号登录--------------------------------->
+			<button id="phone-swtich" class="phone-swtich">Login with mobile phone number</button>
+		</div>
+		<div id="phone-login" class="phone-login">
+			<h2>Login with phone number</h2>
+
+			<form th:action="@{/login}" method="post">
+				<div class="login-p">
+					<label for="phonenum" class="iconfont icon-user"></label>
+					<input type="text" id="Phonenum" autocomplete="off" name="telephone"  class="first_line">
+					<label for="code" class="iconfont icon-lock"></label>
+					<input type="text" id="code" autocomplete="off" name="smsCode">
+
+					<div th:if="${param.error}"
+						 style="position: absolute;
+						 top: 34.5%;
+						 left: 12%;
+						 font-size: 90%;">
+						验证码出错
+					</div>
+
+					<button id="smsCodeBtn" type="button"
+							class="">
+						获取验证码
+					</button>
+
+
+				</div>
+				<input type="submit" value="Login" class="submit" id="submit-btn">
+			</form>
+
+
+			<button id="account-swtich" class="phone-swtich">Login with your account and password</button>
+		</div>
+	</div>
+
+
+<footer th:include="admin/common :: footer"></footer>
+<script type="text/javascript" src="/static/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/lib/layui/layui.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+
+    $('#smsCodeBtn').on('click', function () {
+
+        var telephone=$('.login-p').find('input[name="telephone"]').val();
+
+        /*var telephone = $('.login-form form').find('input[name="telephone"]').val(),
+            phonePattern = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
+        var n = telephone.search(phonePattern);
+        if (n < 0) {
+            layer.msg('请输入正确的手机号', {icon: 5, time: 2000});
+            return false;
+        }
+        $(this).attr('readonly', 'readonly');*/
+
+
+        $.ajax({
+            url: '/sms/code?telephone=' + telephone,
+            type: 'GET',
+            success: function (data) {
+                if (data.code === 200) {
+                    var smsBtn = $('#smsCodeBtn');
+                    smsBtn.attr('disabled', 'disabled');
+                    smsBtn.css("background-color", "#b4b2b3");
+
+                    var time = 60;
+                    var clock = setInterval(function () {
+                        if (time-- <= 0) {
+                            smsBtn.removeAttr('disabled');
+                            smsBtn.css('background-color', '#00b4ef');
+                            smsBtn.text('获取验证码');
+                            clearInterval(clock);
+                        } else {
+                            smsBtn.text(time + 's 重新发送');
+                        }
+                    }, 1000);
+                    layer.msg('获取验证码成功', {icon: 6, time: 2000});
+                } else {
+                    layer.msg('获取失败: ' + data.message, {icon: 5, time: 2000});
+                }
+            },
+            error: function (xhr, response, error) {
+                layer.msg('服务器错误: ' + response, {icon: 5, time: 2000});
+            }
+        });
+    });
+
+
+
+
+
+
+
+
+
+        $('#submit-btn').on('click', function () {
+            var bind = $('.login-form .heading span.select').attr('data-bind');
+
+            if (bind === 'phone') {
+                var telephone = $('.login-form form').find('input[name="telephone"]').val(),
+                    phonePattern = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
+                var n = telephone.search(phonePattern);
+                if (n < 0) {
+                    layer.msg('请输入正确的手机号', {icon: 5, time: 2000});
+                    return false;
+                }
+
+                var smsCode = $('.login-form form').find('input[name="smsCode"]').val();
+                if (smsCode.length !== 6) {
+                    layer.msg('请输入4位验证码', {icon: 5, time: 2000});
+                    return false;
+                }
+            } else {
+                var username = $('.login-form form').find('input[name="username"]').val();
+                if (username.length < 1) {
+                    layer.msg('请输入用户名/手机号', {icon: 5, time: 2000});
+                    return false;
+                }
+                var password = $('.login-form form').find('input[name="password"]').val();
+                if (password.length < 1) {
+                    layer.msg('请输入密码', {icon: 5, time: 2000});
+                    return false;
+                }
+
+            }
+            return true;
+        });
+
+
+
+
+
+
+
+
+    });
+
+
+
+</script>
+
+</body>
+</html>

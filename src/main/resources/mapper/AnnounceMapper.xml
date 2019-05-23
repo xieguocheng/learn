@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.learn.mapper.AnnounceMapper" >
+  <resultMap id="BaseResultMap" type="com.learn.pojo.Announce" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="cancel" property="cancel" jdbcType="INTEGER" />
+    <result column="cancel_time" property="cancelTime" jdbcType="TIMESTAMP" />
+    <result column="remove" property="remove" jdbcType="INTEGER" />
+    <result column="remove_time" property="removeTime" jdbcType="TIMESTAMP" />
+    <result column="priority" property="priority" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="see" property="see" jdbcType="INTEGER" />
+    <result column="see_time" property="seeTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>

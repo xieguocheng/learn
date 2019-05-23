@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/lib/datatables/1.10.15/jquery.dataTables.css">
+    <div th:include="admin/common :: head"></div>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/static/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/static/lib/respond.min.js"></script>
+    <![endif]-->
+
+
+    <style type="text/css">
+
+        th {
+            text-align: center;
+        }
+
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <title>作业统计页面</title>
+</head>
+<body>
+
+<div class="cl pd-20" style=" background-color:#5bacb6">
+    <!-- 教师头像默认保存在home/teacherImg -->
+    <img class="avatar size-XL l" src="/static/images/logo/favicon.png">
+    <dl style="margin-left:80px; color:#fff">
+        <dt>
+			<span class="f-18" >
+                图像分析
+			</span>
+            <!--<br>
+            <span class="f-14" th:text="总分+${courseTask.totalGrade}+分">
+			</span>-->
+        </dt>
+
+    </dl>
+</div>
+
+
+
+
+
+
+<div class="pd-20">
+    <table class="table">
+        <tbody>
+
+        <div id="container" style="min-width:700px;height:400px"></div>
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<footer th:include="admin/common :: footer"></footer>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/hcharts/Highcharts/5.0.6/js/highcharts.js"></script>
+<script type="text/javascript" src="/static/lib/hcharts/Highcharts/5.0.6/js/modules/exporting.js"></script>
+
+
+<script type="text/javascript">
+
+
+
+    $(function () {
+
+        $('.table-sort').dataTable({
+            "aaSorting":
+                [
+                    [
+                        1,"desc"
+                    ]
+                ],//默认第几个排序
+            "bStateSave": true,//状态保存
+            "aoColumnDefs": [
+                //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+                {"orderable":false,"aTargets":[0,2]}// 制定列不参与排序
+            ]
+        });
+        //复选框类型查询
+        $('.type').change(function(){
+            $.ajax({
+                url: 'admin/question/singleChoiceList',
+                data: 'examType=' + $('.type').val(),
+                type: 'get',
+                success: function(data){
+                    $('#sheetList').html(data);
+                },
+                error: function(){
+                    alert('网络出错');
+                }
+            })
+        })
+
+
+
+        $('#container').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: '学生课程作业提交情况饼状图'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                data: [
+                    ['已提交',  [[${submit_yes}]] ],
+                    ['未提交',  [[${submit_no}]]],
+                    /*{
+                        name: '已提交',
+                        y: 12.8,
+                        sliced: true,
+                        selected: true
+                    },*/
+                    /*
+                    ['Safari',    8.5],
+                    ['Opera',     6.2],
+                    ['Others',   0.7]*/
+                ]
+            }]
+
+        });
+
+
+    });
+
+    /*课程详情页面*/
+    function courseTask_show(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+
+
+
+</script>
+
+</body>
+</html>

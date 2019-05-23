@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.learn.mapper.CourseExperimentMapper" >
+  <resultMap id="BaseResultMap" type="com.learn.pojo.CourseExperiment" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="cour_experiment_id" property="courExperimentId" jdbcType="INTEGER" />
+    <result column="course_id" property="courseId" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="cour_url" property="courUrl" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="DOUBLE" />
+    <result column="over_submit" property="overSubmit" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+
+
+  <!--查询最大的question_list_id-->
+  <select id="selectMaxCourExperimentIdByCourseId" resultType="INTEGER">
+        SELECT MAX(cour_experiment_id)
+        FROM course_experiment
+        where course_id=#{courseId};
+  </select>
+
+
+
+
+
+
+
+
+</mapper>

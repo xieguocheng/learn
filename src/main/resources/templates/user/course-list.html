@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title>子鹿班课-用户端</title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href="/static/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/lib/layui/layui.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="/static/css/user/course-list.css">
+
+    <script type="text/javascript">
+
+        function $(id){
+            return document.getElementById(id);
+        }
+        var flag = 0;
+        function sft() {
+            var oStyleSheet=document.styleSheets[4];
+            console.log(oStyleSheet);
+             var oRule=oStyleSheet.rules[15];
+
+
+            if (flag == 0) {
+                oRule.style.left="-100%";
+               flag = 1;
+
+            }
+            else {
+                oRule.style.left = "0%";
+              flag = 0;
+             }
+        }
+
+    </script>
+</head>
+
+<body>
+<nav class="head">
+    <a href="">
+        <div class="user">
+            <img th:src="${session.user.userImg}" >
+            <p th:text="${session.user.username }"></p>
+        </div>
+    </a>
+    <a href="/user/loginout" class="logout">Logout</a>
+</nav>
+<div class="search">
+    <span  class="iconfont icon-search"></span>
+    <input type="text" name="" class="">
+</div>
+<main id="main">
+
+    <button class="switch" th:onclick="|sft()|">></button>
+    <button class="switch" th:onclick="|sft()|"><</button>
+    <div id="shift" >
+        <div class="live course">
+
+            <section class="desc">
+                <h3>Courses I Created</h3>
+                <p th:text="'A total of '+${createCourseDTOList.size()}"></p>
+            </section>
+            <div class="mycourse" >
+                <a class="cell" th:href="@{'/user/createCourse/course?courseId='+${createCourseDTO.courseId}}"
+                   th:each="createCourseDTO,createCourseDTOList : ${createCourseDTOList}">
+                    <img th:src="${createCourseDTO.courseImg}"  alt="course's photo" class="c_img">
+                    <div class="c_desc">
+                        <div class="course_name" th:text="${createCourseDTO?.courseName}"></div>
+                        <div class="class_name" th:text="${createCourseDTO?.classname}"></div>
+                        <div class="class_name" th:if="${createCourseDTO?.classname}==''" th:text="无">无</div>
+                        <div class="t_info">
+                            <img th:src="${createCourseDTO?.teacher?.userImg}" alt="Teacher's photo">
+                            <div>
+                                <p class="t_name"th:text="${createCourseDTO?.teacher?.username}"></p>
+                                <p class="course_id" th:text="课程号+${createCourseDTO?.classnum}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+        <div class="die course">
+            <section class="desc">
+                <h3>Course I Joined</h3>
+                <p th:text="'A total of '+${joineCourseDTOList.size()}"></p>
+            </section>
+            <div class="mycourse">
+                <a class="cell" th:href="@{'/user/joinCourse/course?courseId='+${joineCourseDTO.courseId}}"
+                   th:each="joineCourseDTO,joineCourseDTOList : ${joineCourseDTOList}">
+                    <img th:src="${joineCourseDTO.courseImg}" alt="course's photo" class="c_img">
+                    <div class="c_desc">
+                        <div class="course_name" th:text="${joineCourseDTO.courseName}"></div>
+                        <div class="class_name" th:text="${joineCourseDTO.classname}"></div>
+                        <div class="t_info">
+                            <img th:src="${joineCourseDTO.teacher.userImg}" alt="Teacher's photo">
+                            <div>
+                                <p class="t_name"th:text="${joineCourseDTO.teacher.username}"></p>
+                                <p class="course_id" th:text="课程号+${joineCourseDTO.classnum}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+
+<footer th:include="admin/common :: footer"></footer>
+
+
+</body>
+</html>

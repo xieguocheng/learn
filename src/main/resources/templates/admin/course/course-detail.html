@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/lib/datatables/1.10.15/jquery.dataTables.css">
+    <div th:include="admin/common :: head"></div>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/static/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/static/lib/respond.min.js"></script>
+    <![endif]-->
+    <title>详情页面</title>
+</head>
+<body>
+<div class="cl pd-20" style=" background-color:#5bacb6">
+    <!-- 教师头像默认保存在home/teacherImg -->
+    <img class="avatar size-XL l" th:src="${courseDTO?.courseImg}">
+    <dl style="margin-left:80px; color:#fff">
+        <dt>
+            <span class="f-18" th:text="${courseDTO?.courseName}" ></span>
+            <!--<span class="pl-10 f-12">余额：**</span>-->
+            <span class="pl-10 f-12" th:text="教师【+${courseDTO.teacher.username}+】"></span>
+            <span class="pl-10 f-12" th:text="课程编号【+${courseDTO.classnum}+】"></span>
+        </dt>
+        <dd class="pt-10 f-12" style="margin-left:0" th:text="课程类型【+${courseDTO.myCourseType?.name}+】"></dd>
+    </dl>
+</div>
+<div class="pd-20">
+    <table class="table">
+        <tbody>
+        <tr>
+            <th class="text-r" width="80">简介：</th>
+            <td th:text="${courseDTO?.introduction}"></td>
+        </tr>
+
+        <tr>
+            <th class="text-r" width="80">学习要求：</th>
+            <td th:text="${courseDTO?.request}"></td>
+        </tr>
+
+        <tr>
+            <th class="text-r" width="80">班级名称：</th>
+           <td th:text="${courseDTO?.classname}"></td>
+        </tr>
+
+        <tr>
+            <th class="text-r" width="80">所属学期：</th>
+            <td th:text="${courseDTO?.semeter}"></td>
+        </tr>
+
+        <tr>
+            <th class="text-r" width="80">考试安排：</th>
+            <td th:text="${courseDTO?.examin}"></td>
+        </tr>
+
+        <tr>
+            <th class="text-r" width="80">课程进度：</th>
+            <td th:text="${courseDTO?.speed}"></td>
+        </tr>
+
+        <tr>
+            <th class="text-r" width="80">创建时间：</th>
+            <td th:text="${#dates.format(courseDTO?.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        </tr>
+        <tr>
+            <th class="text-r" width="80">截课时间：</th>
+            <td th:text="${#dates.format(courseDTO?.endTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        </tr>
+
+
+        </tbody>
+    </table>
+</div>
+
+<footer th:include="admin/common :: footer"></footer>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+</body>
+</html>

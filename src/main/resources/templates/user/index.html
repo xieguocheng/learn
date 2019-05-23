@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>子鹿班课</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href="/static/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/lib/layui/layui.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="/static/css/user/login.css">
+</head>
+<body>
+<header>
+    <nav class="login_nav">
+        <div>
+            <p class="title">子鹿班课学习平台</p>
+        </div>
+        <div class="bar">
+            <ul class="ul1">
+                <li><a href="">Home
+                    <ul class="ul2">
+                        <li><a href="">Home</a></li>
+                        <li><a href="">About</a></li>
+                        <li><a href="">Contact</a></li>
+                        <li><a href="">Support</a></li>
+                    </ul>
+                </a></li>
+                <li><a href="">About
+                    <ul class="ul2">
+                        <li><a href="">Home</a></li>
+                        <li><a href="">About</a></li>
+                        <li><a href="">Contact</a></li>
+                        <li><a href="">Support</a></li>
+                    </ul>
+                </a></li>
+                <li><a href="">Contact</a>
+                    <ul class="ul2">
+                        <li><a href="">Home</a></li>
+                        <li><a href="">About</a></li>
+                        <li><a href="">Contact</a></li>
+                        <li><a href="">Support</a></li>
+                    </ul>
+                </li>
+                <li><a href="">Login
+                    <ul class="ul2">
+                        <li><a href="">Management</a></li>
+                        <li><a href="">User</a></li>
+                    </ul>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="block">
+        <div class="title"><h1>Welcome！</h1></div>
+
+
+
+        <form action="#" th:action="@{/user/login}" method="post">
+            <label for="account" class="iconfont icon-user"></label>
+            <input type="text" id="account" autocomplete="off" placeholder="学号"
+                   name="username">
+            <label for="pw" class="iconfont icon-lock"></label>
+            <input type="password" id="pw" placeholder="密码"
+                   name="password">
+            <div th:if="${error }!=null" th:text="${error}" style="color: #666;padding:.5em 2.2em">
+            </div>
+            <button class="submit">Login</button>
+        </form>
+
+
+    </div>
+    <div class="main-bg">
+        <p class="char1">学</p>
+        <p class="char2">而</p>
+        <p class="char3">不</p>
+        <p class="char4">思</p>
+        <section>
+            <p class="char5">则</p>
+            <p class="char6">罔</p>
+        </section>
+
+    </div>
+</main>
+
+<footer>
+
+</footer>
+
+<!--<script type='text/javascript'>
+    (function(m, ei, q, i, a, j, s) {
+        m[i] = m[i] || function() {
+            (m[i].a = m[i].a || []).push(arguments)
+        };
+        j = ei.createElement(q),
+            s = ei.getElementsByTagName(q)[0];
+        j.async = true;
+        j.charset = 'UTF-8';
+        j.src = 'https://static.meiqia.com/dist/meiqia.js?_=t';
+        s.parentNode.insertBefore(j, s);
+    })(window, document, 'script', '_MEIQIA');
+    _MEIQIA('entId', 151181);
+</script>-->
+</body>
+
+</html>

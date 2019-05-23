@@ -1,0 +1,366 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <link rel="stylesheet" type="text/css" href="/static/lib/webuploader/0.1.5/webuploader.css">
+    <link rel="stylesheet" type="text/css" href="/static/lib/datatables/1.10.15/jquery.dataTables.css">
+    <div th:include="admin/common :: head"></div>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/static/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/static/lib/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript">
+        $(function(){
+            init_city_select($("#district"));
+        });
+    </script>
+    <title>添加题目</title>
+</head>
+
+<body>
+
+<article class="page-container">
+    <form action="/user/create/courseExperiment/add" class="form form-horizontal"
+          id="form-teacher-add" method="POST">
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>课程ID：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" th:value="${courseId}"  readonly="readonly"
+                       placeholder="" id="courseId" name="courseId">
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>实验标题：</label>
+            <div class="formControls col-xs-2 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="实验标题" id="" name="title">
+                <p class="textarea-numberbar"><em class="textarea-length"></p>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>实验详情：</label>
+            <div class="formControls col-xs-4 col-sm-9">
+                <textarea name="detail" cols="" rows="" class="textarea"  placeholder="点击编辑实验详情"
+                          onKeyUp="$.Huitextarealength(this,10)"></textarea>
+                <p class="textarea-numberbar"><em class="textarea-length"></p>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">设置分数：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+				<span class="">
+					<select name="score" class="">
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="30">30</option>
+						<option value="40">40</option>
+                        <option value="50">50</option>
+						<option value="60">60</option>
+						<option value="70">70</option>
+						<option value="80">80</option>
+                        <option value="90">90</option>
+						<option value="100">100</option>
+					</select>
+				</span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">超时提交：</label>
+            <div class="formControls col-xs-2 col-sm-9">
+                <span class="select-box">
+                 <select name="overSubmit" class="select">
+                     <option value="1">允许</option>
+                    <option value="0">不允许</option>
+             </select>
+            </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">结束时间：</label>
+            <div class="formControls col-xs-4 col-sm-9">
+                <input type="text" onfocus="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+                       id="createTimeMin" class="input-text Wdate" style="width:180px;"
+                       name="end_time" placeholder="不填默认七天结束">
+                <p class="textarea-numberbar"><em class="textarea-length"></p>
+            </div>
+        </div>
+
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>上传文件：</label>
+
+        <div id="uploader" class="wu-example">
+            <div class="btns">
+                <div id="picker">选择文件</div>
+                <!--<button id="ctlBtn" class="btn btn-default">开始上传</button>-->
+                <div class="uploadBtn" id="ctlBtn">开始上传</div>
+                <!--用来存放文件信息-->
+                <div id="thelist" class="uploader-list"></div>
+
+                <style>
+                    #picker{
+                        margin-left: 1em;
+                    }
+                    #ctlBtn{
+                        display:inline-block;
+                        vertical-align: top;
+                        width: min-content;
+                        white-space: nowrap;
+                        border-radius: 4px;
+                        height: 30px;
+                        width: 80px;
+                        text-align: center;
+                        line-height: 30px;
+                        color: white;
+                        background: #24d788;
+                        cursor: pointer;
+
+                    }
+                    #ctlBtn:hover{
+                        background:#24c768;
+                    }
+                    #submit{
+                        margin-left: -4.8em;
+                        width: 80px;
+                    }
+
+                </style>
+
+
+            </div>
+        </div>
+
+        </div>
+
+
+
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input class="btn btn-primary radius" type="submit" id="submit"
+                       value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+
+    </form>
+</article>
+
+
+<footer th:include="admin/common :: footer"></footer>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="/static/lib/webuploader/0.1.5/webuploader.min.js"></script>
+
+
+<script type="text/javascript">
+    $(function(){
+
+        /******************上传**********************/
+        var $list = $('#thelist'),
+            $btn = $('#ctlBtn'),
+            // 文件上传序列
+            file_sequence = 0;
+
+        var uploader = WebUploader.create({
+            swf: '/static/lib/webuploader/0.1.5/Uploader.swf',
+            auto: false, // 选择文件后自动上传
+            runtimeOrder: 'html5', // 直接使用html5模式，还有flash的我就忽略了..
+            pick: {
+                id: '#picker', // 按钮元素
+                multiple: false // 是否支持文件多选，false表示只能选一个
+            },
+            server: '/user/upload/file/[[${courseId}]]', // 上传文件的接口（替换成你们后端给的接口路径）
+            accept: {
+                title: 'Files',
+                extensions: 'gif,jpg,jpeg,bmp,png,pdf,doc,docx,txt,xls,xlsx,ppt,pptx,zip,mp3,mp4,text,csv',
+                mimeTypes: 'image/*,text/*'
+                //word
+                +',application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                //excel
+                +',application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                //ppt
+                +',application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation'
+                +',application/pdf'
+                +',application/zip'
+                +',application/csv'
+            },
+
+            disableGlobalDnd: true, // 禁掉全局的拖拽功能。
+            fileNumLimit: 5, // 验证文件总数量, 超出则不允许加入队列
+            fileSizeLimit: 30 * 1024 * 1024, // 限制所有上传文件的大小
+            fileSingleSizeLimit: 30 * 1024 * 1024 // 限制单个上传文件的大小
+
+        });
+
+        // 当有文件被添加进队列的时候
+        uploader.on('fileQueued', function (file) {
+            // TODO
+            $list.append( '<div id="' + file.id + '" class="item">' +
+                '<h4 class="info">' + file.name + '</h4>' +
+                '<p class="state">等待上传...</p>' +
+                '</div>' );
+        });
+
+        // 文件上传过程中创建进度条实时显示。
+        uploader.on('uploadProgress', function (file, percentage) {
+            // TODO 自定义进度条
+            var $li = $('#' + file.id),
+                $percent = $li.find('.progress .progress-bar');
+            // 避免重复创建
+            if (!$percent.length) {
+                $percent = $('<div class="progress progress-striped active">' +
+                    '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+                    '</div>' +
+                    '</div>').appendTo($li).find('.progress-bar');
+            }
+            $li.find('p.state').text('上传中');
+            $percent.css('width', percentage * 100 + '%');
+        });
+
+        // 上传成功
+        uploader.on('uploadSuccess', function (file, response) {
+            $( '#'+file.id ).find('p.state').text('已上传');
+
+            var path = response.data.key;
+            $file_container = $('.uploader-list');
+            $file_container.off().append
+            ('<input type="hidden" name="courUrls" value="' + path + '" />')
+            file_sequence++;
+
+            alert("文件："+response.data.key+"上传成功");
+
+            //hideBatchDialog();
+            /*if (response.status === 1) {
+                // 只要文件上传成功就可以了直接请求检测接口
+                // TODO..
+            } else {
+                alert(response.message);
+            }*/
+        });
+
+        // 上传失败
+        uploader.on('uploadError', function (file) {
+            $( '#'+file.id ).find('p.state').text('上传出错');
+            alert('上传失败');
+            // TODO
+        });
+
+        // 上传完成（不论成功或失败都会执行）
+        uploader.on('uploadComplete', function (file) {
+            $( '#'+file.id ).find('.progress').fadeOut();
+            // TODO
+        });
+
+        // 上传错误
+        uploader.on('error', function (status) {
+            var errorTxt = '';
+            if (status == 'Q_TYPE_DENIED') {
+                errorTxt = '文件类型错误';
+            } else if (status == 'Q_EXCEED_SIZE_LIMIT') {
+                errorTxt = '文件大小超出限制，请控制在30M以内哦';
+            } else {
+                errorTxt = '其他错误';
+            }
+            alert('提示:' + errorTxt);
+        });
+
+        $btn.on('click', function () {
+            if ($(this).hasClass('disabled')) {
+                return false;
+            }
+            uploader.upload();
+        });
+
+/***************************提交*******************************************************/
+
+        $('.select').change(function(){
+            if($(this).val()==3||$(this).val()==4){
+                $('.choose').css('display','none');
+            }else{
+                $('.choose').css('display','block');
+            }
+        })
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $("#form-teacher-add").validate({
+            rules:{
+                title:{
+                    required:true,
+                },
+                detail:{
+                    required:true,
+                }
+
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                //这里使用异步提交是为了验证区域存不存在
+                //form.submit();
+
+                /* alert(5456);
+                $(form).ajaxSubmit({
+
+                    url : "${pageContext.request.contextPath}/teacher/teacherAdd",
+                    type : "POST",
+                    data : fd,
+                    dataType : "json",
+                    processData : false, // 告诉jQuery不要去处理发送的数据
+                    contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+                    success: function(data){
+                        if (data.status==1){
+                            alert("添加教师成功");
+                            location.href="${pageContext.request.contextPath}/teacher/teacherList";
+                        }else{
+                            alert("添加失败！");
+                        }
+                    }
+                }); */
+
+                var index = parent.layer.getFrameIndex(window.name);
+                //parent.$('.btn-refresh').click();
+                //parent.layer.close(index);
+
+                var fd = new FormData($("#form-teacher-add")[0]);
+                $.ajax({
+                    url : "/user/createCourse/courseExperiment/add",
+                    type : "post",
+                    data : fd,
+                    dataType : "json",
+                    processData : false, // 告诉jQuery不要去处理发送的数据
+                    contentType : false, // 告诉jQuery不要去设置Content-Type请求头
+                    success: function(data){
+                        if (data.code === 200){
+                            alert("新增实验成功！惠州人民发来贺电！！");
+                            parent.layer.close(index);
+                            layer.msg('已添加!',{icon:1,time:2000});
+                        }else{
+                            layer.msg('添加失败!',{icon: 5,time:1000});
+                            location.replace(location.href);
+
+                        }
+                    }
+                });
+            }
+        });
+
+
+    });
+</script>
+</body>
+</html>

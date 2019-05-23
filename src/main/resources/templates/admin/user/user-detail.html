@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/lib/datatables/1.10.15/jquery.dataTables.css">
+    <div th:include="admin/common :: head"></div>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/static/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/static/lib/respond.min.js"></script>
+    <![endif]-->
+    <title>用户详情页面</title>
+</head>
+<body>
+
+<div class="cl pd-20" style=" background-color:#5bacb6">
+    <img class="avatar size-XL l" th:src="${userDTO.userImg}">
+    <dl style="margin-left:80px; color:#fff">
+        <dt>
+            <span class="f-18" th:text="${userDTO.username}"></span>
+            <span class="pl-10 f-12"></span>
+        </dt>
+        <dd class="pt-10 f-12" style="margin-left:0" th:text="别名【+${userDTO?.nickname}+】"></dd>
+    </dl>
+</div>
+
+<div class="pd-20">
+    <table class="table">
+        <tbody>
+        <tr>
+            <th class="text-r" width="80">性别：</th>
+            <td th:if="${userDTO?.sex}==0" >未知</td>
+            <td th:if="${userDTO?.sex}==1" >男</td>
+            <td th:if="${userDTO?.sex}==2" >女</td>
+        </tr>
+        <tr>
+            <th class="text-r" >手机：</th>
+            <td th:text="${userDTO?.telephone}"></td>
+        </tr>
+        <tr>
+            <th class="text-r">邮箱：</th>
+            <td th:text="${userDTO?.email}"></td>
+        </tr>
+        <tr>
+            <th class="text-r">学校-院系：</th>
+            <td th:text="${userDTO.mySchool.name}+'—'+${userDTO.myDept.name}"></td>
+        </tr>
+
+        <tr>
+            <th class="text-r">学历：</th>
+            <td th:text="${userDTO.mySchool.properties}"></td>
+        </tr>
+        <tr>
+            <th class="text-r">地区：</th>
+            <td th:text="${userDTO.mySchool.place}"></td>
+        </tr>
+        <tr>
+            <th class="text-r">注册时间：</th>
+            <td th:text="${#dates.format(userDTO?.createTime, 'yyyy-MM-dd hh:ss:mm')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer th:include="admin/common :: footer"></footer>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+</body>
+</html>

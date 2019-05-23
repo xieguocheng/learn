@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- 定义需引入的公共资源 start -->
+<head th:fragment="head">
+
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <link rel="Bookmark" href="../../static/favicon.ico" type="image/x-icon" >
+    <link rel="shortcut Icon" href="../../static/favicon.ico" type="image/x-icon"/>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/static/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/static/lib/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/static/lib/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/lib/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/lib/h-ui.admin/skin/default-black/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/static/lib/h-ui.admin/css/style.css"/>
+
+    <!--[if IE 6]>
+    <script type="text/javascript" src="/static/lib/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+
+
+
+    <title>子鹿班课后台管理</title>
+    <meta name="keywords" content="learn">
+    <meta name="description" content="learn后台管理系统">
+</head>
+<!-- 定义需引入的公共资源 end -->
+
+<!-- 定义统一头部标签样式 start -->
+<header th:fragment="header" class="navbar-wrapper">
+    <div class="navbar navbar-fixed-top">
+        <div class="container-fluid cl"><a class="logo navbar-logo f-l mr-10 hidden-xs" href="/">子鹿班课</a>
+            <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/">后台管理系统</a>
+            <span class="logo navbar-slogan f-l mr-10 hidden-xs">后台管理系统</span>
+            <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
+            <nav class="nav navbar-nav">
+                <ul class="cl">
+                    <li class="dropDown dropDown_hover"><a href="javascript:;" class="dropDown_A"><i
+                            class="Hui-iconfont">&#xe600;</i> 新增 <i class="Hui-iconfont">&#xe6d5;</i></a>
+                        <ul class="dropDown-menu menu radius box-shadow">
+                            <!--<li><a href="javascript:;" onclick="article_add('添加房源','/admin/add/house/')"><i-->
+                            <li><a href="javascript:;" data-title="添加管理员" data-href="/admin/add/house"
+                                   th:onclick="|add('新增管理','/admin/userSuper/AddPage')|">
+                                <i class="Hui-iconfont">&#xe616;</i> 管理员</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
+                <ul class="cl">
+
+                    <li class="dropDown dropDown_hover">
+                        <a href="#" class="dropDown_A">
+
+                            <div style="display: inline-block;" sec:authentication="name"
+                                 th:text="${session.SPRING_SECURITY_CONTEXT.
+                                 authentication.principal.username}">
+                            </div>
+                            <!--这里导致前端页面乱了-->
+
+                            <i class="Hui-iconfont">&#xe6d5;</i></a>
+                        <ul class="dropDown-menu menu radius box-shadow">
+                            <li><a href="javascript:;" th:onclick="'mySelfInfo(' + ${adminId} + ')'">个人信息</a></li>
+                            <li><a href="javascript:;"
+                   th:onclick="|javascript:switch_account(this)|">
+                                切换账户</a>
+                            </li>
+                            <li><a href="/logout">退出</a></li>
+                        </ul>
+                    </li>
+
+
+                    <li id="Hui-msg"><a href="#" title="消息"><span class="badge badge-danger">1</span><i
+                            class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a></li>
+
+                    <li id="Hui-skin" class="dropDown right dropDown_hover">
+                        <a href="javascript:;" class="dropDown_A" title="换肤">
+                            <i class="Hui-iconfont" style="font-size:18px">&#xe62a;</i></a>
+                        <ul class="dropDown-menu menu radius box-shadow">
+                            <li><a href="javascript:;" data-val="default" title="default（green）">default（green）</a></li>
+                            <li><a href="javascript:;" data-val="blue" title="blue">blue</a></li>
+                            <li><a href="javascript:;" data-val="default-black" title="black">black</a></li>
+                            <li><a href="javascript:;" data-val="red" title="red">red</a></li>
+                            <li><a href="javascript:;" data-val="yellow" title="yellow">yellow</a></li>
+                            <li><a href="javascript:;" data-val="orange" title="orange">orange</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+<!-- 定义统一头部标签样式 end -->
+
+<!-- 菜单 start -->
+<div th:fragment="left_menu">
+    <aside class="Hui-aside">
+        <div class="menu_dropdown bk_2">
+            <dl id="menu-question">
+                <dt><i class="Hui-iconfont">&#xe616;</i> 题库管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="/admin/question/singleChoiceList" data-title="单选题管理"
+                               href="javascript:void(0)">单选题</a></li>
+                        <li><a data-href="/admin/question/multipleChoiceList" data-title="不定项选择"
+                               href="javascript:void(0)">不定项选择</a></li>
+                        <li><a data-href="/admin/question/fillBlankList" data-title="填空题"
+                               href="javascript:void(0)">填空题</a></li>
+                        <li><a data-href="/admin/question/essayQuestionList" data-title="简答题"
+                               href="javascript:void(0)">简答题</a></li>
+                        <li><a data-href="/admin/question/questionAddPage" data-title="自己出题"
+                               href="javascript:void(0)">自己出题</a></li>
+                    </ul>
+
+                </dd>
+            </dl>
+            <dl id="menu-course">
+                <dt><i class="Hui-iconfont">&#xe616;</i> 课程管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="/admin/course/courseDoingList" data-title="课程进行"
+                               href="javascript:void(0)">课程进行</a></li>
+                        <li><a data-href="/admin/course/courseEndList" data-title="课程结束"
+                               href="javascript:void(0)">课程结束</a></li>
+                        <li><a data-href="/admin/course/courseDeleteList" data-title="已删除课程"
+                               href="javascript:void(0)">已删除课程</a></li>
+                    </ul>
+                </dd>
+            </dl>
+
+            <dl id="menu-category">
+                <dt><i class="Hui-iconfont">&#xe620;</i> 类型管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="/admin/category/courseTypeList" data-title="课类列表" href="javascript:void(0)">
+                            课类列表</a></li>
+                        <li><a data-href="/admin/category/deptList" data-title="院系列表" href="javascript:void(0)">
+                            院系列表</a></li>
+                    </ul>
+                </dd>
+            </dl>
+
+            <dl id="menu-user">
+                <dt><i class="Hui-iconfont">&#xe60d;</i> 用户管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="/admin/user/userList" data-title="用户列表" href="javascript:void(0)">
+                            用户列表</a></li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl id="menu-superUser">
+                <dt><i class="Hui-iconfont">&#xe62d;</i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="/admin/userSuper/userSuperList" data-title="管理员列表" href="javascript:void(0)">
+                            管理员列表</a></li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl id="menu-suggestion">
+                <dt><i class="Hui-iconfont">&#xe622;</i> 意见管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="/admin/suggestion/suggestionList" data-title="用户意见" href="javascript:void(0)">
+                            用户意见</a></li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl id="menu-statistics">
+                <dt><i class="Hui-iconfont">&#xe61a;</i>数据统计<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="/admin/chart/chart-03" data-title="课程数据折线图" href="javascript:void(0)">
+                        课程折线图</a></li>
+                        <li><a data-href="/admin/chart/chart-02" data-title="用户数据折线图" href="javascript:void(0)">
+                            用户折线图</a></li>
+                        <li><a data-href="/admin/chart/chart-01" data-title="用户数据折线图" href="javascript:void(0)">
+                            用户时间轴折线图</a></li>
+
+                    </ul>
+                </dd>
+            </dl>
+            <dl id="menu-system">
+            <dt><i class="Hui-iconfont">&#xe62e;</i> 系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+            </dt>
+            <dd>
+                <ul>
+                    <li><a data-href="/admin/system/systemList" data-title="系统通知" href="javascript:void(0)">
+                        系统通知</a></li>
+                    <li><a data-href="/admin/system/systemLogList" data-title="登录日志" href="javascript:void(0)">
+                        登录日志</a></li>
+                </ul>
+            </dd>
+            </dl>
+
+
+
+        </div>
+    </aside>
+    <div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a>
+    </div>
+</div>
+<!-- 菜单 end -->
+
+
+<div th:fragment="house_manage">
+    <script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="/static/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript">
+        /*添加*/
+        function add(title,url,w,h){
+            layer_show(title,url,w,h);
+        }
+        /*用户-切换账号*/
+        function switch_account(obj,id){
+            layer.confirm('确定要切换账号吗？<br>这将会退出当前账号哦！',
+                function(index){
+                parent.window.location="/admin/switchAccount";
+            });
+        }
+    </script>
+    <!--<script type="text/javascript">
+        $('.table-sort').dataTable({
+            "aaSorting": [1, "desc"],//默认第几个排序
+            "bStateSave": true,//状态保存
+            "aoColumnDefs": [
+                //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+                {"orderable": false, "aTargets": [0, 8]}// 不参与排序的列
+            ]
+        });
+
+        /*资讯-添加*/
+        function article_add(title, url, w, h) {
+            var index = layer.open({
+                type: 2,
+                title: title,
+                content: url
+            });
+            layer.full(index);
+        }
+        /*资讯-编辑*/
+        function article_edit(title, url, id, w, h) {
+            var index = layer.open({
+                type: 2,
+                title: title,
+                content: url
+            });
+            layer.full(index);
+        }
+        /*资讯-删除*/
+        function article_del(obj, id) {
+            layer.confirm('确认要删除吗？', function (index) {
+                $.ajax({
+                    type: 'POST',
+                    url: '',
+                    dataType: 'json',
+                    success: function (data) {
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!', {icon: 1, time: 1000});
+                    },
+                    error: function (data) {
+                        console.log(data.msg);
+                    },
+                });
+            });
+        }
+
+        /*资讯-审核*/
+        function article_shenhe(obj, id) {
+            layer.confirm('审核文章？', {
+                    btn: ['通过', '不通过', '取消'],
+                    shade: false,
+                    closeBtn: 0
+                },
+                function () {
+                    $(obj).parents("tr").find(".td-manage").prepend('<a class="c-primary" onClick="article_start(this,id)" href="javascript:;" title="申请上线">申请上线</a>');
+                    $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
+                    $(obj).remove();
+                    layer.msg('已发布', {icon: 6, time: 1000});
+                },
+                function () {
+                    $(obj).parents("tr").find(".td-manage").prepend('<a class="c-primary" onClick="article_shenqing(this,id)" href="javascript:;" title="申请上线">申请上线</a>');
+                    $(obj).parents("tr").find(".td-status").html('<span class="label label-danger radius">未通过</span>');
+                    $(obj).remove();
+                    layer.msg('未通过', {icon: 5, time: 1000});
+                });
+        }
+        /*资讯-下架*/
+        function article_stop(obj, id) {
+            layer.confirm('确认要下架吗？', function (index) {
+                $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="article_start(this,id)" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>');
+                $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已下架</span>');
+                $(obj).remove();
+                layer.msg('已下架!', {icon: 5, time: 1000});
+            });
+        }
+
+        /*资讯-发布*/
+        function article_start(obj, id) {
+            layer.confirm('确认要发布吗？', function (index) {
+                $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="article_stop(this,id)" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>');
+                $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
+                $(obj).remove();
+                layer.msg('已发布!', {icon: 6, time: 1000});
+            });
+        }
+        /*资讯-申请上线*/
+        function article_shenqing(obj, id) {
+            $(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">待审核</span>');
+            $(obj).parents("tr").find(".td-manage").html("");
+            layer.msg('已提交申请，耐心等待审核!', {icon: 1, time: 2000});
+        }
+    </script>-->
+</div>
+
+<div th:fragment="footer">
+    <script type="text/javascript" src="/static/lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="/static/lib/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="/static/lib/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="/static/js/common.js"></script>
+</div>
+
+</html>

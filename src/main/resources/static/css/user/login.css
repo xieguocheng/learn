@@ -1,0 +1,301 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+body
+{
+    font-weight: lighter;
+
+    color: #666;
+    background: #efefef;
+}
+a
+{
+    text-decoration: none;
+
+    color: #666;
+}
+ul
+{
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+header .login_nav
+{
+    height: 4em;
+    padding: 0 8%;
+
+    background: white;
+}
+header .login_nav div
+{
+    line-height: 4em;
+
+    display: inline-block;
+
+    height: 4em;
+}
+header .login_nav div.bar
+{
+    float: right;
+}
+header .login_nav div.bar ul.ul1 li
+{
+    display: inline-block;
+
+    width: 137px;
+
+    text-align: center;
+}
+header .login_nav div.bar ul.ul1 li a
+{
+    position: relative;
+
+    display: block;
+}
+header .login_nav div.bar ul.ul1 li a:hover
+{
+    color: #efefef;
+    background: gray;
+}
+header .login_nav div.bar ul.ul2
+{
+    position: absolute;
+    z-index: 10;
+    left: -999em;
+
+    overflow: hidden;
+
+    border: thin solid #ddd;
+    border-top: 0;
+    border-radius: 5px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    background: white;
+}
+header .login_nav div.bar ul.ul1 li:hover .ul2
+{
+    left: auto;
+}
+header .login_nav div.bar ul.ul2 li
+{
+    display: block;
+
+    border-top: thin solid #efefef;
+}
+/*Login frame
+		-------------------*/
+@keyframes toRight
+{
+    0%
+    {
+        left: calc(50% - 9.5em);
+
+        opacity: 0;
+    }
+    100%
+    {
+        left: 65%;
+
+        opacity: 1;
+    }
+}
+.block
+{
+    position: fixed;
+    left: calc(50% - 9.5em);
+
+    width: 19em;
+    height: 26em;
+    margin: 7.5em 0;
+
+    animation: toRight 1.5s;
+
+    opacity: 0;
+    color: #666;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 0 10px #ddd;
+
+    animation-fill-mode: forwards;
+}
+.block .title
+{
+    padding: 5em 2em 0em 2em;
+}
+.block .title h1
+{
+    font-weight: lighter;
+}
+.block form
+{
+    margin-top: 2.5em;
+}
+.block form input[type=text],
+.block form input[type=password]
+{
+    font-size: 120%;
+    font-weight: lighter;
+
+    display: block;
+
+    width: 100%;
+    height: 2em;
+    margin: 0;
+    padding: 0;
+
+    text-indent: 2em;
+
+    color: #666;
+    border: 0;
+    background: #ddd;
+}
+.block form button
+{
+    font-size: 120%;
+
+    display: block;
+
+    margin: 2.5em 2em;
+    padding: .5em 2.5em;
+
+    color: white;
+    border: 0;
+    border-radius: 5px;
+    background: #888;
+}
+.block form button:active
+{
+    background: #777;
+}
+.block form input[type=text]
+{
+    border-bottom: thin solid #aaa;
+}
+/*iconfont
+-----------*/
+@font-face {
+    font-family: 'iconfont';
+    src: url(data:application/font-woff2;charset=utf-8;base64,d09GMgABAAAAAAU4AA0AAAAACfAAAAThAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP0ZGVE0cGh4GVgCCWhEICocghWwLEAABNgIkAxYEIAWFCAdNG0IIyC4KYyLTh6tEz5OVmpWHkt1yPl3+MILneTu/c9/MBBN8Qu2KSP5KqKgWRrd1juyq6gOo2ek9AIqemI1eGRQJBNVtr78JJE2aiSkILJAsCwLQXrLyPplIixOw7P9szXQBVetrp+zOugo1RZCAdt2lilBVAxpRYSuZnkB4QGE+r+0PuDMRtzBwJ0AAT0vjAHhx7wbuvhFwglCAIjQWQgcKSCInBtSh7gBrgJ+Xh8KwgWIUuPU7rK40cKi63w5oHh99ihcvIACnBjmjfYwudsF+j0U5wGSjqJrzrdu33m8HfIP92YhnEacl8yQJQAQ16UFoIh2g/HsEoCRtFKHV7m7gD2QGZAcAdAC4h8agj07dv9hYUIDFNO1OZ3BQGZd4n4H85U+uE8xrowjLpk2i/Fu2IMO7ObOG8fj5iqcPn4Jzcxt+A7ZqQPXR1lUphF/T2FXbRdkNs81ih15qg2pqWqd25xYaKv0qKreKN4rsu6AEx9OnBSHodXVlIWVJHT1/3j1sj9HdkVQtIjL9LD/42ZMuwf0ig2Ji1LNuobtUokE/Mh9SP/JWp2na2mvaK5rC3AuiqrdLNokemIaEhA229leLhg60iYcP1djPXDb5pNR55kG0vuthiev847hpvLqzv+vQVUngCe/1Ep7D15C42HolrHW5eqVtrWaVTlHdnjO6P33e9cmzXqy1C6d1YgBtpv/hpdygqRVFHV2fX9Pz4J3nuPVZlxvPQjwD3AErhsSHqMZnVNknY9YwQ5UIV9dwZSJCmUNrD0NcWr3KUWU77nnpucRZZb/UhDXlPEc85YIky4hxzZp4WM36UPhQ9rWZUCFYqITBcuKyBxYrgeWST/z/blvkqp/2+esnQ0Ime6vMvVZFcnz97JuMTuiN4RMWvvolY0tJCmiLUkcE84wuuT2+FmEYPqdk/7RZasOG1H10cjpGwmUD92Zm9gJhtKM62b7q8EuxY3M1m5+N3lWbb7M8e3MNDXNz3dpvT1elfX0c2TyV+u7L9FlY8EIwrLElVJD84SvwXgCG70P32w+DH7xw73e9fTD4wwtXyODPgv+aNxKPsCv0X2hsoQRzzuDrohidz9nO4XfDXUSKcfDVNKbdu5lI8fTdkzobQcs0sH/RnwGq3YsGyoD22gR2H2870wA10FsjXHeniFWChyQdB1P3GI1sQ3cJQbTQid45RWD1Eq3xurXENVQgGDn+OYoc70yBvKSJK/t3AQABgsUv9+6L56/+b3PoDHBr/v+bcl/zADYKgGBQ8iQxfLQiBAl64tBJsoIx3qSjCrCagZUoYIoAPkQCvSwpFELHBmHTBRSrsaCxWcLQOfvB4HAbLGw+gikrGic7BMVmNJJ2IBMAIPw5geLWFzT+Chg6pxsModbAwt9DMHXzfrBDaoyDS5NcpET5qiKNgiQl1BSELJlwj3xcMM9ddOOf7vX8lUnlgvDJAJ2Q6AqkS5QLXq5XbvLyKWo3pFx5UjIVGNJjANbl3RvqGWRltCGjy160nxfJU4jOSL58mAIsV5YMCtyKIKR06XZAQXY4SUUi4BY9cKUTm1dIN8rPxyt53e3LuuW06UXPAYAR5ZNsVvTFSrjkgB6iTidss5w4s26mYp76qsHEhlqBUKFEE10Mfcb0de6ZAzNLk8lMekaiEdu/i/hTU1hmIAAAAA==) format('woff2'),
+        url(data:application/font-woff;charset=utf-8;base64,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) format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-lock:before {
+  content: "\e62d";
+}
+
+.icon-user:before {
+  content: "\e6a3";
+}
+label[for="account"],
+label[for="pw"]{
+	position: absolute;
+	left: .6em;
+	line-height: 2em;
+	font-size: 120%;
+}
+/*bg
+		-------------*/
+.main-bg
+{
+    font-size: 10em;
+    font-weight: lighter;
+    line-height: 1.5;
+
+    position: fixed;
+    z-index: -1;
+    top: .8em;
+    left: .5em;
+
+    width: 60%;
+}
+.main-bg p
+{
+    display: inline-block;
+
+    color: #bbb;
+}
+.main-bg section
+{
+    display: inline-block;
+}
+@keyframes toShow
+{
+    0%
+    {
+        opacity: 0;
+    }
+    60%
+    {
+        opacity: 0;
+    }
+    100%
+    {
+        opacity: 1;
+    }
+}
+@keyframes keepOpacity
+{
+    0%
+    {
+        opacity: 0;
+    }
+    100%
+    {
+        opacity: 0;
+    }
+}
+.char1
+{
+    animation: toShow 1s;
+}
+.char2
+{
+    animation: toShow 1.6s;
+}
+.char3
+{
+    animation: toShow 2.5s;
+}
+.char4
+{
+    animation: toShow 3.6s;
+}
+.char5
+{
+    animation: toShow 4.7s;
+}
+.main-bg p.char6
+{
+    margin-left: -20px;
+    padding: 0 20px;
+
+    animation: toShow 5.8s;
+
+    color: white;
+    color: white;
+    border-radius: 5px;
+    background: #bbb;
+}
+.char1,
+.char2,
+.char3,
+.char4,
+.char5,
+.main-bg p.char6
+{
+    opacity: 0;
+
+    animation-fill-mode: forwards;
+}
