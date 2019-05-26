@@ -56,8 +56,13 @@ public class UserServiceImpl implements UserService {
         User user=userMapper.selectByPrimaryKey(userId);
         userDTO=modelMapper.map(user,UserDTO.class);
         userDTO.setMySchool(schoolMapper.selectByPrimaryKey(user.getSchoolId()));
-        userDTO.setMyDept(deptMapper.selectByPrimaryKey(
-                Integer.valueOf(user.getDept())));//注意user.getDept()换成integer
+        if (user.getDept()==null){
+            userDTO.setMyDept(null);
+        }else {
+            userDTO.setMyDept(deptMapper.selectByPrimaryKey(
+                    Integer.valueOf(user.getDept())));//注意user.getDept()换成integer
+        }
+
         return userDTO;
     }
 

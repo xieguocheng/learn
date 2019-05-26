@@ -4,6 +4,7 @@ import com.learn.dto.CourseDTO;
 import com.learn.pojo.User;
 import com.learn.service.CourseService;
 import com.learn.service.UserService;
+import com.learn.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -55,14 +56,15 @@ public class UserLoginController {
     public String login(@RequestParam("username") String number,
                         @RequestParam("password") String password,
                         Map<String, Object> map, HttpServletRequest request,
-                        Model model) {
+                        Model model) throws Exception{
 
         User user=userService.findUserByNumber(number);
         if(user==null){
             model.addAttribute("error","账号密码错误");
             return "user/index";
         }
-        if(this.passwordEncoder.matches(password,user.getPassword())){
+        //使用md5进行加密验证
+        if(MD5Utils.getMD5Str(password).equals(user.getPassword())){
             request.getSession().setMaxInactiveInterval(120*60);
             request.getSession().setAttribute("user", user);
             request.setAttribute("user",user);

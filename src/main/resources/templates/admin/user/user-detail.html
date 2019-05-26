@@ -41,16 +41,16 @@
         </tr>
         <tr>
             <th class="text-r">学校-院系：</th>
-            <td th:text="${userDTO.mySchool.name}+'—'+${userDTO.myDept.name}"></td>
+            <td th:text="${userDTO?.mySchool?.name}+'—'+${userDTO?.myDept?.name}"></td>
         </tr>
 
         <tr>
             <th class="text-r">学历：</th>
-            <td th:text="${userDTO.mySchool.properties}"></td>
+            <td th:text="${userDTO?.mySchool?.properties}"></td>
         </tr>
         <tr>
             <th class="text-r">地区：</th>
-            <td th:text="${userDTO.mySchool.place}"></td>
+            <td th:text="${userDTO?.mySchool?.place}"></td>
         </tr>
         <tr>
             <th class="text-r">注册时间：</th>

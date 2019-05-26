@@ -142,7 +142,7 @@ public class QuestionServiceImpl implements QuestionService {
             values.add(Integer.parseInt(str[i]));
         }
         Example questionExample=new Example(Question.class);
-        questionExample.createCriteria().andIn("questionListId",values);
+        questionExample.createCriteria().andIn("questionId",values);
         return questionMapper.selectByExample(questionExample);
 
     }
