@@ -1,5 +1,7 @@
 
 ## 子鹿班课后台管理系统 ##
+# 团队名 #
+### Seven Twelve ###
 # 项目介绍 #
 - learn-子鹿班课后台管理系统项目提供了PC Web端后台管理员可以通过登录后台进行后台管理，主要包括：题库管理、课程管理（包括课程作业，实验管理）、分类管理、用户管理以及系统统计管理。为后台管理提供直观的数据统计，同时PC Web端提供了用户登录上传实验操作。主要采用技术:spring boot 2.0.5+spring+Spring Mvc+mybatis+Spring Security+Jquery+Thymeleaf+Bootstrap+webUpLoad+H-ui+MySQL+redis+Nginx
 
@@ -48,7 +50,55 @@ java/com/learn：
 # 安装教程 #
 略
 # 项目展示 #
-- 后台登录界面
+- 后台管理登录界面
+<table>
+    <tr>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/1.png" >图1  后台登录界面</center></td>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/2.png"  >图2 后台登录界面</center></td>
+    </tr>
+
+    <tr>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/3.png" >图3  后台界面</center></td>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/4.png"  >图4 后台界面</center></td>
+    </tr>
+
+    <tr>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/5.png" >图5  后台界面</center></td>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/6.png"  >图6 后台界面</center></td>
+    </tr>
+	<tr>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/7.png" >图7  后台界面</center></td>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/8.png"  >图8 后台界面</center></td>
+    </tr>
+	<tr>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/9.png" >图9  后台界面</center></td>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/10.png"  >图10 后台界面</center></td>
+    </tr>
+	<tr>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/11.png" >图11  后台界面</center></td>
+        
+    </tr>
+</table>
+- 用户端操作界面
+<table>
+    <tr>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/12.png" >图12  用户界面</center></td>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/13.png"  >图13 用户界面</center></td>
+    </tr>
+
+    <tr>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/14.png" >图14  用户界面</center></td>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/15.png"  >图15 用户界面</center></td>
+    </tr>
+	<tr>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/16.png" >图16  用户界面</center></td>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/17.png"  >图17 用户界面</center></td>
+    </tr>
+	<tr>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/18.png" >图18  用户界面</center></td>
+    </tr>
+   
+</table>
 
 
 
