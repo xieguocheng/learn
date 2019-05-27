@@ -88,8 +88,10 @@
                 <td th:if="${user?.sex}==1" >男</td>
                 <td th:if="${user?.sex}==2" >女</td>
 
-                <td th:text="${user.telephone}"></td>
-                <td th:text="${user.email}"></td>
+                <td th:if="${user.telephone==null}">无</td>
+                <td th:if="${user.telephone!=null}"th:text="${user.telephone}"></td>
+                <td th:if="${user.email==null}">无</td>
+                <td th:if="${user.email!=null}"th:text="${user.email}"></td>
 
                 <th th:text="${#dates.format(user?.createTime, 'yyyy-MM-dd')}"></th>
 

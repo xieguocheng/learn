@@ -62,7 +62,7 @@
                         <a href="#" class="dropDown_A">
 
                             <div style="display: inline-block;" sec:authentication="name"
-                                 th:text="${session.SPRING_SECURITY_CONTEXT.
+                                 th:text="管理员 +${session.SPRING_SECURITY_CONTEXT.
                                  authentication.principal.username}">
                             </div>
                             <!--这里导致前端页面乱了-->
@@ -178,8 +178,8 @@
                 </dt>
                 <dd>
                     <ul>
-                        <li><a data-href="/admin/suggestion/suggestionList" data-title="用户意见" href="javascript:void(0)">
-                            用户意见</a></li>
+                        <li><a data-href="/admin/feedback/feedbackList" data-title="意见反馈" href="javascript:void(0)">
+                            意见反馈</a></li>
                     </ul>
                 </dd>
             </dl>

@@ -70,7 +70,7 @@
                     <div class="c_desc">
                         <div class="course_name" th:text="${createCourseDTO?.courseName}"></div>
                         <div class="class_name" th:text="${createCourseDTO?.classname}"></div>
-                        <div class="class_name" th:if="${createCourseDTO?.classname}==''" th:text="无">无</div>
+                        <div class="class_name" th:if="${createCourseDTO?.classname==null}" >******</div>
                         <div class="t_info">
                             <img th:src="${createCourseDTO?.teacher?.userImg}" alt="Teacher's photo">
                             <div>

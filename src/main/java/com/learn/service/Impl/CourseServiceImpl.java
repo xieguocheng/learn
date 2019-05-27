@@ -160,9 +160,12 @@ public class CourseServiceImpl implements CourseService {
         //查询我创建的课程
         List<Course> createCourseList=findCreateCourseByUserId(userId);
         createCourseList.forEach(course -> {
-            CourseDTO courseDTO=modelMapper.map(course,CourseDTO.class);
-            courseDTO.setTeacher(userService.findUserByUserId(course.getUserId()));
-            createCourseDTOList.add(courseDTO);
+            //判断是否删除了
+            if(course.getStatus()!=0){
+                CourseDTO courseDTO=modelMapper.map(course,CourseDTO.class);
+                courseDTO.setTeacher(userService.findUserByUserId(course.getUserId()));
+                createCourseDTOList.add(courseDTO);
+            }
         });
         return createCourseDTOList;
     }
@@ -174,9 +177,12 @@ public class CourseServiceImpl implements CourseService {
         //查询我创建的课程
         List<Course> joinCourseList=findJoinCourseByUserId(userId);
         joinCourseList.forEach(course -> {
-            CourseDTO courseDTO=modelMapper.map(course,CourseDTO.class);
-            courseDTO.setTeacher(userService.findUserByUserId(course.getUserId()));
-            joinCourseDTOList.add(courseDTO);
+            //判断是否删除了
+            if(course.getStatus()!=0) {
+                CourseDTO courseDTO = modelMapper.map(course, CourseDTO.class);
+                courseDTO.setTeacher(userService.findUserByUserId(course.getUserId()));
+                joinCourseDTOList.add(courseDTO);
+            }
         });
         return joinCourseDTOList;
     }

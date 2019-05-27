@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <link rel="stylesheet" type="text/css" href="/static/lib/datatables/1.10.15/jquery.dataTables.css">
+    <div th:include="admin/common :: head"></div>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/static/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="/static/lib/respond.min.js"></script>
+    <![endif]-->
+
+    <title>意见反馈</title>
+</head>
+
+<body>
+
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;
+    </span> 意见管理 <span class="c-gray en">&gt;</span> 意见反馈
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+
+    <div class="Hui-article">
+        <article class="cl pd-20">
+
+            <div class="text-c"> 日期范围：
+                <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:120px;">
+                -
+                <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d'})" id="datemax" class="input-text Wdate" style="width:120px;">
+                <input type="text" class="input-text" style="width:250px" placeholder="输入关键词" id="" name="">
+                <button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜意见</button>
+            </div>
+
+            <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i>
+                批量删除</a> </span> <span class="r">共有数据：<strong>2</strong> 条</span>
+            </div>
+
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <th width="25"><input type="checkbox" name="" value=""></th>
+                        <th width="60">ID</th>
+                        <th width="60">用户</th>
+                        <th>留言内容</th>
+                        <th width="100">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr class="text-c">
+                        <td><input type="checkbox" value="1" name=""></td>
+                        <td>1</td>
+                        <td><a href="javascript:;" onclick="member_show('谢国城','member-show.html','10001','360','400')"><i class="avatar size-L radius">
+                            <img alt="" src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJCNLAkIDTOwbA9dD4jvRYMfgJKxKB2Tqa4s6yDXiabxROrxc1C5WhKI9u0VibnEEgyiblsWKsCdLgEw/132"></i></a>
+                        </td>
+                        <td class="text-l">
+                            <div class="c-999 f-12">
+                            <u style="cursor:pointer" class="text-primary" onclick="member_show('谢国城','member-show.html','10001','360','400')">
+                                谢国城</u>
+                            <time title="2014年8月31日 下午3:20" datetime="2014-08-31T03:54:20">2019-5-22 15:20</time>
+                            <span class="ml-20">15217848368</span> <span class="ml-20">11111111@qq.com</span>
+                            </div>
+                            <div class="f-12 c-999">页面加载有点慢</div>
+                            <div>就是页面加载有点慢，其他的都很好</div>
+                        </td>
+                        <td class="td-manage"><a title="编辑" href="javascript:;" onclick="member_edit('编辑','member-add.html','4','','510')" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="member_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+                    </tr>
+
+                    <tr class="text-c">
+                        <td><input type="checkbox" value="1" name=""></td>
+                        <td>2</td>
+                        <td><a href="javascript:;" onclick="member_show('谢国城','member-show.html','10001','360','400')"><i class="avatar size-L radius">
+                            <img alt="" src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJCNLAkIDTOwbA9dD4jvRYMfgJKxKB2Tqa4s6yDXiabxROrxc1C5WhKI9u0VibnEEgyiblsWKsCdLgEw/132"></i></a>
+                        </td>
+                        <td class="text-l"><div class="c-999 f-12">
+                            <u style="cursor:pointer" class="text-primary" onclick="member_show('谢国城','member-show.html','10001','360','400')">
+                                谢国城</u>
+                            <time title="2014年8月31日 下午3:20" datetime="2014-08-31T03:54:20">2019-5-22 15:20</time>
+                            <span class="ml-20">15217848368</span> <span class="ml-20">11111111@qq.com</span>
+                        </div>
+                            <div class="f-12 c-999">
+                                挺好用的
+                            </div>
+                            <div>子鹿班课很流畅，很喜欢</div>
+                        </td>
+                        <td class="td-manage"><a title="编辑" href="javascript:;" onclick="member_edit('编辑','member-add.html','4','','510')" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="member_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </div>
+
+
+
+
+
+
+
+
+<footer th:include="admin/common :: footer"></footer>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+
+<script type="text/javascript">
+    $(function(){
+        $('.table-sort').dataTable({
+            "aaSorting":
+                [
+                    [
+                        1,"desc"
+                    ]
+                ],//默认第几个排序
+            "bStateSave": true,//状态保存
+            "aoColumnDefs": [
+                //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+                {"orderable":false,"aTargets":[0,2,5]}// 制定列不参与排序
+            ]
+        });
+        //复选框类型查询
+        $('.type').change(function(){
+            $.ajax({
+                url: 'admin/question/singleChoiceList',
+                data: 'examType=' + $('.type').val(),
+                type: 'get',
+                success: function(data){
+                    $('#sheetList').html(data);
+                },
+                error: function(){
+                    alert('网络出错');
+                }
+            })
+        })
+
+    });
+    /*用户-添加*/
+    function member_add(title,url,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*用户-查看*/
+    function member_show(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+
+
+
+
+    /*用户-编辑*/
+    function question_edit(title,url,id,w,h){
+        layer_show(title,url,w,h);
+    }
+</script>
+</body>
+</html>

@@ -68,7 +68,7 @@
                 <th>课程名称</th>
                 <th>课程封面</th>
                 <th>创建时间</th>
-
+                <th>状态</th>
                 <th width="100">操作</th>
             </tr>
             </thead>
@@ -83,6 +83,16 @@
                          th:src="${course.courseImg}"></td>
 
                 <th th:text="${#dates.format(course?.createTime, 'yyyy-MM-dd')}"></th>
+
+                <td th:if="${course.status}==2" >
+                    <span class="label label-warning radius">课程已结束</span>
+                </td>
+                <td th:if="${course.status}==1" >
+                    <span class="label label-secondary radius">课程进行中</span>
+                </td>
+                <td th:if="${course.status}==0" >
+                    <span class="label label-danger radius">课程已删除</span>
+                </td>
 
                 <td class="td-manage">
                     <!--<a title="停用" style="text-decoration:none" onClick="member_stop(this,'10001')" href="javascript:;" >

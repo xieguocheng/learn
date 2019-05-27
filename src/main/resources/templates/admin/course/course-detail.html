@@ -26,6 +26,12 @@
 <div class="pd-20">
     <table class="table">
         <tbody>
+
+        <tr>
+            <th class="text-r" width="80">加入：</th>
+            <td th:if="${courseDTO.added==1}"><span  class="label label-secondary radius">允许</span></td>
+            <td th:if="${courseDTO.added==0}"><span  class="label label-danger radius">不允许</span></td>
+        </tr>
         <tr>
             <th class="text-r" width="80">简介：</th>
             <td th:text="${courseDTO?.introduction}"></td>

@@ -236,8 +236,13 @@ public class UserCreateController {
             String courUrl="";
             for (String url:courUrls) {
                 url=java.net.URLEncoder.encode(url,"utf-8");//对路径上的中文字体进行编码urlencoder
-                String path=cdnPrefix+url+",";
-                courUrl=courUrl+path;
+                String path=cdnPrefix+url;
+                if(courUrl.equals("")){
+                    courUrl=courUrl+path;
+                }else {
+                    courUrl=courUrl+","+path;
+                }
+
             }//System.out.println(courUrl);
             //【3】补充courseExperiment的属性
             courseExperiment.setEndTime(endTime);
