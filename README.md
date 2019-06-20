@@ -110,7 +110,7 @@ java/com/learn：
 <table>
 	<tr>
         <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/18.png" >图18  用户界面</center></td>
-		<td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/20.png" >图18  用户界面</center></td>
+		<td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/20.jpg" >图18  用户界面</center></td>
     </tr>
 </table>
 
