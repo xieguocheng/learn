@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.learn</groupId>
     <artifactId>learn</artifactId>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>0.0.6-SNAPSHOT</version>
     <name>learn</name>
     <description>Demo project for Spring Boot</description>
 
@@ -139,8 +139,8 @@
             <artifactId>aliyun-java-sdk-core</artifactId>
             <version>3.2.3</version>
             <!--打包的时候记得把下面两行注释了，因为仓库冲突，不用理会smsservice报错-->
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/aliyun-java-sdk-core-3.2.3.jar</systemPath>
+            <!--<scope>system</scope>
+            <systemPath>${project.basedir}/lib/aliyun-java-sdk-core-3.2.3.jar</systemPath>-->
         </dependency>
         <dependency>
             <groupId>com.aliyun</groupId>
