@@ -5,7 +5,7 @@
 # 项目介绍 #
 - learn:子鹿班课后台管理系统项目提供了PC Web端后台管理员可以通过登录后台进行后台管理，主要包括：题库管理、课程管理（包括课程作业，实验管理）、分类管理、用户管理以及系统统计管理。为后台管理提供直观的数据统计，同时PC Web端提供了用户登录上传实验操作。主要采用技术:spring boot 2.0.5+spring+Spring Mvc+mybatis+Spring Security+Jquery+Thymeleaf+Bootstrap+webUpLoad+H-ui+MySQL+redis+Nginx
 
-- learn-wechat:子鹿班课小程序端可以通过点击查看：[learn-wechat小程序端](https://github.com/xieguocheng/learn "learn小程序")，该小程序端主要提供用户可以创建课程，加入课程等一系列功能，这里不做过多的介绍
+- learn-wechat:子鹿班课小程序端可以通过点击查看：[learn-wechat小程序端](https://github.com/xieguocheng/learn-wechat "learn-wechat小程序端")，该小程序端主要提供用户可以创建课程，加入课程等一系列功能，这里不做过多的介绍
 - learn-wechat-data:子鹿班课小程序端后台api接口可以通过点击查看：[learn-wechat-data小程序端api接口](https://github.com/xieguocheng/learn-wechat-data "learn-wechat-data小程序api接口")，提供小程序端后台api接口，这里不做过多的介绍
 # 技术选型 #
 -  后端使用技术
