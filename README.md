@@ -3,9 +3,10 @@
 # 团队名 #
 ### Seven Twelve ###
 # 项目介绍 #
-- learn-子鹿班课后台管理系统项目提供了PC Web端后台管理员可以通过登录后台进行后台管理，主要包括：题库管理、课程管理（包括课程作业，实验管理）、分类管理、用户管理以及系统统计管理。为后台管理提供直观的数据统计，同时PC Web端提供了用户登录上传实验操作。主要采用技术:spring boot 2.0.5+spring+Spring Mvc+mybatis+Spring Security+Jquery+Thymeleaf+Bootstrap+webUpLoad+H-ui+MySQL+redis+Nginx
+- learn:子鹿班课后台管理系统项目提供了PC Web端后台管理员可以通过登录后台进行后台管理，主要包括：题库管理、课程管理（包括课程作业，实验管理）、分类管理、用户管理以及系统统计管理。为后台管理提供直观的数据统计，同时PC Web端提供了用户登录上传实验操作。主要采用技术:spring boot 2.0.5+spring+Spring Mvc+mybatis+Spring Security+Jquery+Thymeleaf+Bootstrap+webUpLoad+H-ui+MySQL+redis+Nginx
 
-- learn-子鹿班课小程序端可以通过点击查看：[Learn-小程序端](https://github.com/xieguocheng/learn "learn小程序")，该小程序端主要提供用户可以创建课程，加入课程等一系列功能，这里不做过多的介绍
+- learn-wechat:子鹿班课小程序端可以通过点击查看：[learn-wechat小程序端](https://github.com/xieguocheng/learn "learn小程序")，该小程序端主要提供用户可以创建课程，加入课程等一系列功能，这里不做过多的介绍
+- learn-wechat-data:子鹿班课小程序端后台api接口可以通过点击查看：[learn-wechat-data小程序端api接口](https://github.com/xieguocheng/learn-wechat-data "learn-wechat-data小程序api接口")，提供小程序端后台api接口，这里不做过多的介绍
 # 技术选型 #
 -  后端使用技术
 	-  jdk：1.8
@@ -48,14 +49,20 @@ java/com/learn：
 <br/>|--template 前端html网页文件
 <br/>|--application.properties 系统总配置
 # 安装教程 #
-略
+1. GitHub克隆本地仓库到本地
+2. application.properties配置MySQL参数
+3. application.properties配置七牛云参数
+4. application.properties配置邮件参数
+5. application.properties配置阿里云短信参数
+6. 项目编译运行
+
 # 项目展示 #
 - 后台管理登录界面
 
 <table>
     <tr>
         <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/1.png" >图1  后台登录界面</center></td>
-        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/2.png"  >图2 后台登录界面</center></td>
+        <td ><center><img src="https://raw.githubusercontent.com/xieguocheng/learn/master/picture/2.png" >图2 后台登录界面</center></td>
     </tr>
 </table>
 <table>
